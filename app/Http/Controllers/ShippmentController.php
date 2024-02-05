@@ -202,7 +202,7 @@ class ShippmentController extends Controller
                 if ($shipment->has_label) {
                     $label = public_path('storage/labels/' . $shipment->api_id . '.pdf');
                     array_push($data['iterator'], $label);
-                } elseif (@$shipment->transport['shippingLabelId']) {
+                } elseif (isset($shipment->transport['shippingLabelId'])) {
                     $bol_shipment_service = new BolShipmentService($shipment->account);
                     $shipping_label_id = @$shipment->transport['shippingLabelId'];
                     $label = $bol_shipment_service->getLabel($shipping_label_id);
