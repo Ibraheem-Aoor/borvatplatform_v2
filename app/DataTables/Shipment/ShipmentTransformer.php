@@ -20,11 +20,9 @@ class ShipmentTransformer extends TransformerAbstract
             'label' =>  @$shipment->transport['shippingLabelId'],
             'firstName' => $shipment->first_name,
             'surname' => $shipment->surname,
-            'city' => $shipment->city,
             'country_code' => $shipment->country_code,
-            'streetName' => $shipment->street_name,
-            'houseNumber' => $shipment->house_no,
             'place_date' => $shipment->place_date,
+            'is_printed' => $shipment->getIsPrintedInHtml(),
             'checkbox' => '<input class="form-check-input" type="checkbox" name="id[]" value="' . $shipment->id . '">',
             'note' => '<span id="row-' . $shipment->id . '">' . $shipment->note . '</span>',
         ];

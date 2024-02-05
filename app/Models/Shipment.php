@@ -153,4 +153,14 @@ class Shipment extends Model
     }
 
 
+
+    public function getIsPrintedInHtml()
+    {
+        $color = $this->is_printed ?  '✅' :  '🟥';
+        return "<span>{$color}</span>";
+    }
+
+
+
+
 }

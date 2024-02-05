@@ -62,11 +62,9 @@
                                 <th scope="col">Label</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Sure Name</th>
-                                <th scope="col">City</th>
                                 <th scope="col">Country</th>
-                                <th scope="col">Street Name</th>
-                                <th scope="col">House Number</th>
                                 <th scope="col">Place Date</th>
+                                <th scope="col">Is Printed</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,6 +123,13 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{!! $table_data_url !!}",
+                order: [
+                    [
+                        9,
+                        'desc',
+
+                    ]
+                ],
                 columns: [{
                         data: 'checkbox',
                         name: 'checkbox',
@@ -171,34 +176,20 @@
                         orderable: true,
                     },
                     {
-                        data: 'city',
-                        name: 'city',
-                        orderable: true,
-                        searchable: true,
-
-                    },
-                    {
                         data: 'country_code',
                         name: 'country_code',
                         orderable: true,
                         searchable: true,
 
                     },
-                    {
-                        data: 'streetName',
-                        name: 'street_name',
-                        searchable: true,
-                        orderable: true,
-                    },
-                    {
-                        data: 'houseNumber',
-                        name: 'house_no',
-                        searchable: true,
-                        orderable: true,
-                    },
+
                     {
                         data: 'place_date',
                         name: 'place_date',
+                    },
+                    {
+                        data: 'is_printed',
+                        name: 'is_printed',
                     },
                 ]
             });
