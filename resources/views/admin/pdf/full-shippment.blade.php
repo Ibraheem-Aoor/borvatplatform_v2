@@ -129,7 +129,7 @@
     {{-- End Order No --}}
     @foreach ($products as $product)
         @php
-            $product_image = getImageUrl('storage/products/' . $product->id . '/' . $product->image);
+            $product_image = getImageUrl('products/' . $product->id . '/' . $product->image);
         @endphp
         <table class="full-width borderd-table" border="1">
             <tr>

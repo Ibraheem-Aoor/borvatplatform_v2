@@ -175,7 +175,6 @@ class ShippmentController extends Controller
         $ids = $request->id;
         $is_mail_allowed = true;
         $data['bol_logo'] = asset('assets/img/bol-logo.jpg');
-        $data['borvat_logo'] = asset('assets/img/up_logo.png');
         // $data['shipment_sender_details'] = json_decode(BusinessSetting::where('key', 'shipment_sender_details')->first()->value, true);
         $data['inside_netherlands_logo'] = asset("assets/img/inside_netherlands_logo.jpg");
         $data['outside_netherlands_logo'] = asset("assets/img/outside_netherlands_logo.jpg");
@@ -212,9 +211,6 @@ class ShippmentController extends Controller
             $shipment->save();
             $data['page_count'] += 1;
         } //end foreach
-        if ($zinapesly_rate_limit_counter == 100) {
-            Cache::put('zinapesly_rate_limit_reached', true, Carbon::now()->addSeconds(60));
-        }
         $merger->addIterator($data['iterator']);
         $createdPdf = $merger->merge();
         file_put_contents(public_path('result.pdf'), $createdPdf);
