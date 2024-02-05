@@ -166,55 +166,60 @@ class ShippmentController extends Controller
 
     public function generateFullShippmentPdf(Request $request)
     {
+        try {
 
-        if (ob_get_level() > 0) {
-            ob_clean();
-        }
-        ini_set('max_execution_time', 900); // 120 (seconds) = 2 Minutes
-        set_time_limit(0);
-        $ids = $request->id;
-        $is_mail_allowed = true;
-        $data['bol_logo'] = public_path('assets/img/bol-logo.jpg');
-        // $data['shipment_sender_details'] = json_decode(BusinessSetting::where('key', 'shipment_sender_details')->first()->value, true);
-        $data['inside_netherlands_logo'] = asset("assets/img/inside_netherlands_logo.jpg");
-        $data['outside_netherlands_logo'] = asset("assets/img/outside_netherlands_logo.jpg");
-        $data['iterator'] = [];
-        $data['page_count'] = 1;
-        $data['table_font_size'] = '13px !important';
-        $merger = new Merger;
-        if ($request->is_copy) {
-            $data['today_date'] = Carbon::today()->toDateString();
-        }
-        $views = [];
-        $shipments = Shipment::query()->whereIn('id', $ids)->get();
-        // $zinapesly_shipping_service = new ZianpeslyShippingService();
-        $zinapesly_rate_limit_counter = 0;
-        foreach ($shipments as $shipment) {
-            $data['shipment'] = $shipment;
-            $data['products']   =   $shipment->products;
-            $pdf = Pdf::loadView('admin.pdf.full-shippment', $data);
-            $pdf->setPaper('A5');
-            $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
-            file_put_contents($temp_pdf, $pdf->output());
-            array_push($data['iterator'], $temp_pdf);
-            if ($shipment->has_label) {
-                $label = public_path('storage/labels/' . $shipment->api_id . '.pdf');
-                array_push($data['iterator'], $label);
-            } else {
-                $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
+            if (ob_get_level() > 0) {
+                ob_clean();
+            }
+            ini_set('max_execution_time', 900); // 120 (seconds) = 2 Minutes
+            set_time_limit(0);
+            $ids = $request->id;
+            $is_mail_allowed = true;
+            $data['bol_logo'] = public_path('assets/img/bol-logo.jpg');
+            // $data['shipment_sender_details'] = json_decode(BusinessSetting::where('key', 'shipment_sender_details')->first()->value, true);
+            $data['inside_netherlands_logo'] = asset("assets/img/inside_netherlands_logo.jpg");
+            $data['outside_netherlands_logo'] = asset("assets/img/outside_netherlands_logo.jpg");
+            $data['iterator'] = [];
+            $data['page_count'] = 1;
+            $data['table_font_size'] = '13px !important';
+            $merger = new Merger;
+            if ($request->is_copy) {
+                $data['today_date'] = Carbon::today()->toDateString();
+            }
+            $views = [];
+            $shipments = Shipment::query()->whereIn('id', $ids)->get();
+            // $zinapesly_shipping_service = new ZianpeslyShippingService();
+            $zinapesly_rate_limit_counter = 0;
+            foreach ($shipments as $shipment) {
+                $data['shipment'] = $shipment;
+                $data['products'] = $shipment->products;
+                $pdf = Pdf::loadView('admin.pdf.full-shippment', $data);
                 $pdf->setPaper('A5');
                 $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
                 file_put_contents($temp_pdf, $pdf->output());
                 array_push($data['iterator'], $temp_pdf);
-            }
-            $shipment->is_printed = true;
-            $shipment->save();
-            $data['page_count'] += 1;
-        } //end foreach
-        $merger->addIterator($data['iterator']);
-        $createdPdf = $merger->merge();
-        file_put_contents(public_path('result.pdf'), $createdPdf);
-        return response()->download(public_path('result.pdf'), 'BOL-Shipments-' . Carbon::now()->toDateTimeString() . '.pdf');
+                if ($shipment->has_label) {
+                    $label = public_path('storage/labels/' . $shipment->api_id . '.pdf');
+                    array_push($data['iterator'], $label);
+                } else {
+                    $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
+                    $pdf->setPaper('A5');
+                    $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
+                    file_put_contents($temp_pdf, $pdf->output());
+                    array_push($data['iterator'], $temp_pdf);
+                }
+                $shipment->is_printed = true;
+                $shipment->save();
+                $data['page_count'] += 1;
+            } //end foreach
+            $merger->addIterator($data['iterator']);
+            $createdPdf = $merger->merge();
+            file_put_contents(public_path('result.pdf'), $createdPdf);
+            return response()->download(public_path('result.pdf'), 'BOL-Shipments-' . Carbon::now()->toDateTimeString() . '.pdf');
+        }catch(Throwable $e)
+        {
+            dd($e);
+        }
     }
 
 
