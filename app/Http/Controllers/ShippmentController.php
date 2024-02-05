@@ -212,13 +212,13 @@ class ShippmentController extends Controller
                         $shipment->has_label = true;
                         $shipment->save();
                         array_push($data['iterator'], $label);
-                    } else {
-                        $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
-                        $pdf->setPaper('A5');
-                        $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
-                        file_put_contents($temp_pdf, $pdf->output());
-                        array_push($data['iterator'], $temp_pdf);
                     }
+                }else {
+                    $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
+                    $pdf->setPaper('A5');
+                    $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
+                    file_put_contents($temp_pdf, $pdf->output());
+                    array_push($data['iterator'], $temp_pdf);
                 }
                 $shipment->is_printed = true;
                 $shipment->save();
