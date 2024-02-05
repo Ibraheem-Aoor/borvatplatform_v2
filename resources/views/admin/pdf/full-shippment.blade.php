@@ -169,7 +169,7 @@
                     </h3>
                 </td>
                 <td class="text-center">
-                    <img src="{{ public_path('storage/'.$shipment->account->logo) }}" width="90">
+                    {{-- <img src="{{ public_path('storage/'.$shipment->account->logo) }}" width="90"> --}}
                 </td>
             </tr>
         </table>
