@@ -20,7 +20,21 @@ class UserSeeder extends Seeder
             'email' => 'admin@borvat.com',
         ], [
             'email' => 'admin@borvat.com',
-            'name'  =>  'admin',
+            'name'  =>  'ABO SHAM',
+            'password'  =>  Hash::make('123123123'),
+        ]);
+        User::query()->updateOrCreate([
+            'email' => 'hema@borvat.com',
+        ], [
+            'email' => 'hema@borvat.com',
+            'name'  =>  'hema',
+            'password'  =>  Hash::make('123123123'),
+        ]);
+        User::query()->updateOrCreate([
+            'email' => 'sulieman@borvat.com',
+        ], [
+            'email' => 'sulieman@borvat.com',
+            'name'  =>  'sulieman',
             'password'  =>  Hash::make('123123123'),
         ]);
     }
