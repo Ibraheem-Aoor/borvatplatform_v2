@@ -37,8 +37,6 @@ class AccountController extends Controller
             $account_key_for_env = strtoupper(Str::snake(strtolower($data['name'])) . "_BOL_ACCOUNT_KEY");
             $this->overWriteEnvFile($account_id_for_env, $data['client_id']);
             $this->overWriteEnvFile($account_key_for_env, $data['client_key']);
-            // dispatch_sync(new FetchBolOrdersJob($bol_account));
-            // dispatch_sync(new FetchBolShipmentsJob($bol_account));
             $response = generateResponse(status: true, modal_to_hide: '#account-create-update-modal', reset_form: true, table_reload: true);
             Cache::forget('bol_accounts');
         } catch (Throwable $e) {
@@ -58,8 +56,6 @@ class AccountController extends Controller
             $account_key_for_env = strtoupper(Str::snake(strtolower($data['name'])) . "_BOL_ACCOUNT_KEY");
             $this->overWriteEnvFile($account_id_for_env, $data['client_id']);
             $this->overWriteEnvFile($account_key_for_env, $data['client_key']);
-            dispatch_sync(new FetchBolOrdersJob($bol_account));
-            dispatch_sync(new FetchBolShipmentsJob($bol_account));
             $response = generateResponse(status: true, modal_to_hide: '#account-create-update-modal', reset_form: true, table_reload: true);
             Cache::forget('bol_accounts');
         } catch (Throwable $e) {
