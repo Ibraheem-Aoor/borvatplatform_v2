@@ -209,6 +209,7 @@ class BolShipmentService extends BaseBolService
         $this->getBolRetailer()
             ->getBolAccount()
             ->shipments()
+            ->orderByDesc('place_date')
             ->whereHasLabel(false)
             ->chunk(200, function ($shipments) {
                 $this->storeLabels($shipments);
