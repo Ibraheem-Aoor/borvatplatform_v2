@@ -129,7 +129,7 @@
     {{-- End Order No --}}
     @foreach ($products as $product)
         @php
-            $product_image = getImageUrl('products/' . $product->id . '/' . $product->image);
+            $product_image = public_path('storage/products/' . $product->id . '/' . $product->image);
         @endphp
         <table class="full-width borderd-table" border="1">
             <tr>
@@ -169,7 +169,7 @@
                     </h3>
                 </td>
                 <td class="text-center">
-                    <img src="{{ getImageUrl($shipment->account->logo) }}" width="90">
+                    <img src="{{ public_path('storage/'.$shipment->account->logo) }}" width="90">
                 </td>
             </tr>
         </table>

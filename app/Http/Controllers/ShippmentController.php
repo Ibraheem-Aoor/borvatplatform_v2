@@ -174,7 +174,7 @@ class ShippmentController extends Controller
         set_time_limit(0);
         $ids = $request->id;
         $is_mail_allowed = true;
-        $data['bol_logo'] = asset('assets/img/bol-logo.jpg');
+        $data['bol_logo'] = public_path('assets/img/bol-logo.jpg');
         // $data['shipment_sender_details'] = json_decode(BusinessSetting::where('key', 'shipment_sender_details')->first()->value, true);
         $data['inside_netherlands_logo'] = asset("assets/img/inside_netherlands_logo.jpg");
         $data['outside_netherlands_logo'] = asset("assets/img/outside_netherlands_logo.jpg");
