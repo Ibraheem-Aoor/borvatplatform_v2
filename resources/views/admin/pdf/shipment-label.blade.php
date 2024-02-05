@@ -98,17 +98,17 @@
 
 <body>
 
-    <h3 class="text-center">{{$shippment->order->api_id}}</h3>
+    <h3 class="text-center">{{ $shipment->order->api_id }}</h3>
     {{-- Shipment --}}
 
     <h5>Verzenddatum:</h3>
         <div>
-            @if (!$shippment->has_label)
+            @if (!$shipment->has_label)
                 <div class="child">
                     <ul>
                         <li class="red">
                             Bol.com nr:
-                            {{$shippment->order->api_id}}
+                            {{ $shipment->order->api_id }}
                         </li>
                         <li>
                             Afzender:
@@ -127,11 +127,10 @@
                 </div>
 
                 <div style="display: inline-block;" style="padding-left:10% !important;">
-                    @if (@$shippment->client->country != 'NL')
-                        <img src="{{$outside_netherlands_logo}}" alt=""
-                            width="300">
+                    @if (@$shipment->country_code != 'NL')
+                        <img src="{{ $outside_netherlands_logo }}" alt="" width="300">
                     @else
-                        <img src="{{$inside_netherlands_logo}}" alt="" width="70%">
+                        <img src="{{ $inside_netherlands_logo }}" alt="" width="70%">
                     @endif
                 </div>
             @endif
@@ -139,29 +138,29 @@
 
 
 
-        @if (!$shippment->has_label)
+        @if (!$shipment->has_label)
             <div class="parent">
                 <div class="child no-border">
-                    <img src="{{$borvat_logo}}" alt="" width="40%">
+                    <img src="{{ $borvat_logo }}" alt="" width="40%">
                     <br>
-                    <p class="red">{{ 'BS' . $shippment->api_id }}</p>
+                    <p class="red">{{ 'BS' . $shipment->api_id }}</p>
                 </div>
 
                 <div class="child" style="padding:15px !important;"
                     style="border:1px solid #000;margin-bottom:15% !important;margin-left:5% !important;">
                     <ul>
                         <li>
-                            {{ @$shippment->client->first_name . ' ' . @$shippment->client->last_name }}
+                            {{ @$shipment->first_name . ' ' . @$shipment->surname }}
                         </li>
                         <li>
-                            {{ @$shippment_object_details['streetName'] . ' ' . @$shippment_object_details['houseNumber'] . ' ' . @$shippment_object_details['houseNumberExtension'] }}
+                            {{ @$shipment->street_name . ' ' . @$shipment->house_no . ' ' . @$shipment->shipment_details['houseNumberExtension'] }}
                         </li>
                         <li>
-                            {{ @$shippment->client->zip_code }} &nbsp;
-                            {{ @$shippment->client->city }}
+                            {{ @$shipment->zip_code }} &nbsp;
+                            {{ @$shipment->city }}
                         </li>
                         <li>
-                            {{ @$shippment->client->country }}
+                            {{ @$shipment->country_code }}
                         </li>
                     </ul>
                 </div>

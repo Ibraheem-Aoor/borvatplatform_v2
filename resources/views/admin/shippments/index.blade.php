@@ -59,6 +59,7 @@
                                 <th scope="col">Order ID</th>
                                 <th scope="col">Shipment No</th>
                                 <th scope="col">Account</th>
+                                <th scope="col">Label</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Sure Name</th>
                                 <th scope="col">City</th>
@@ -150,6 +151,12 @@
                         data: 'account',
                         name: 'account',
                         searchable: true,
+                    },
+                    {
+                        data: 'label',
+                        name: 'label',
+                        orderable: false,
+                        searchable: false,
                     },
                     {
                         data: 'firstName',

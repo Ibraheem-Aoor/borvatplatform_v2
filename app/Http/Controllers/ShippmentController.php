@@ -202,7 +202,7 @@ class ShippmentController extends Controller
                 if ($shipment->has_label) {
                     $label = public_path('storage/labels/' . $shipment->api_id . '.pdf');
                     array_push($data['iterator'], $label);
-                } else {
+                } elseif (@$shipment->transport['shippingLabelId']) {
                     $bol_shipment_service = new BolShipmentService($shipment->account);
                     $shipping_label_id = @$shipment->transport['shippingLabelId'];
                     $label = $bol_shipment_service->getLabel($shipping_label_id);
@@ -212,12 +212,13 @@ class ShippmentController extends Controller
                         $shipment->has_label = true;
                         $shipment->save();
                         array_push($data['iterator'], $label);
+                    } else {
+                        $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
+                        $pdf->setPaper('A5');
+                        $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
+                        file_put_contents($temp_pdf, $pdf->output());
+                        array_push($data['iterator'], $temp_pdf);
                     }
-                    // $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
-                    // $pdf->setPaper('A5');
-                    // $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
-                    // file_put_contents($temp_pdf, $pdf->output());
-                    // array_push($data['iterator'], $temp_pdf);
                 }
                 $shipment->is_printed = true;
                 $shipment->save();

@@ -17,6 +17,7 @@ class ShipmentTransformer extends TransformerAbstract
             'order_id' => $shipment->order?->api_id,
             'api_id' => $shipment->api_id,
             'account' => "<span class='text-primary'>{$shipment->account->name}</span>",
+            'label' =>  @$shipment->transport['shippingLabelId'],
             'firstName' => $shipment->first_name,
             'surname' => $shipment->surname,
             'city' => $shipment->city,
