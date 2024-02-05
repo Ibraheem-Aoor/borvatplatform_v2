@@ -177,7 +177,7 @@ class BolShipmentService extends BaseBolService
      * @throws UnauthorizedException
      * @throws Throwable
      */
-    private function getLabel(string $shipping_label_id): ?string
+    public function getLabel(string $shipping_label_id): ?string
     {
         try {
             if (!Cache::has($this->getBolRetailer()->getBolAccount()->name . '_shipping_labels_rate_limit_reached')) {

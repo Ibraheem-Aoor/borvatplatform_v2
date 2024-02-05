@@ -11,6 +11,7 @@ use App\Models\BolAccount;
 use App\Models\BusinessSetting;
 use App\Models\Order;
 use App\Models\Shipment;
+use App\Services\BOL\BolShipmentService;
 use App\Services\PDF_HTML;
 use App\Services\ZianpeslyShippingService;
 use App\Traits\BoolApiTrait;
@@ -202,11 +203,21 @@ class ShippmentController extends Controller
                     $label = public_path('storage/labels/' . $shipment->api_id . '.pdf');
                     array_push($data['iterator'], $label);
                 } else {
-                    $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
-                    $pdf->setPaper('A5');
-                    $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
-                    file_put_contents($temp_pdf, $pdf->output());
-                    array_push($data['iterator'], $temp_pdf);
+                    $bol_shipment_service = new BolShipmentService($shipment->account);
+                    $shipping_label_id = @$shipment->transport['shippingLabelId'];
+                    $label = $bol_shipment_service->getLabel($shipping_label_id);
+                    if ($label) {
+                        $path = 'labels/' . $shipment->api_id . '.pdf';
+                        $label = saveImage($path, $label);
+                        $shipment->has_label = true;
+                        $shipment->save();
+                        array_push($data['iterator'], $label);
+                    }
+                    // $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
+                    // $pdf->setPaper('A5');
+                    // $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
+                    // file_put_contents($temp_pdf, $pdf->output());
+                    // array_push($data['iterator'], $temp_pdf);
                 }
                 $shipment->is_printed = true;
                 $shipment->save();
@@ -216,8 +227,7 @@ class ShippmentController extends Controller
             $createdPdf = $merger->merge();
             file_put_contents(public_path('result.pdf'), $createdPdf);
             return response()->download(public_path('result.pdf'), 'BOL-Shipments-' . Carbon::now()->toDateTimeString() . '.pdf');
-        }catch(Throwable $e)
-        {
+        } catch (Throwable $e) {
             dd($e);
         }
     }
