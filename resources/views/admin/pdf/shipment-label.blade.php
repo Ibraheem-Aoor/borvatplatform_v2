@@ -141,7 +141,7 @@
         @if (!$shipment->has_label)
             <div class="parent">
                 <div class="child no-border">
-                    <img src="{{ $borvat_logo }}" alt="" width="40%">
+                    <img src="" alt="" width="40%">
                     <br>
                     <p class="red">{{ 'BS' . $shipment->api_id }}</p>
                 </div>
