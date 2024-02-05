@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        ul {
+            list-style-type: none;
+        }
+
+        div.child {
+            float: left;
+            width: 40%;
+        }
+
+        div.child>div {
+            margin-right: 10px;
+            height: 100px;
+            box-sizing: border-box;
+            /* background: yellow; */
+            text-align: center;
+            border: 1px solid red;
+        }
+
+        .no-border {
+            border: none;
+            margin-top: 5% !important;
+        }
+
+        img {
+            /* margin-top: 5% !important; */
+        }
+
+        ul {
+            list-style-type: none !important;
+            list-style: none !important;
+        }
+
+        li {
+            list-style: none !important;
+        }
+
+        .bold {
+            font-weight: bold !important;
+        }
+
+        .red {
+            color: red !important;
+        }
+
+        body {
+            font-size: 12px !important;
+        }
+
+        .full-width {
+            width: 100% !important;
+        }
+
+        .mb-2 {
+            margin-bottom: 2% !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        .text-left {
+            text-align: left !important;
+        }
+
+        .text-right {
+            text-align: right !important;
+        }
+
+        .text-danger {
+            color: red !important;
+        }
+
+        .borderd-table {
+            font-size: {{ $table_font_size }},
+        }
+
+        .borderd-table tr:first-of-type td {
+            border: none !important;
+        }
+
+        .borderd-table tr {
+            height: 50px !important;
+        }
+
+        body {
+            font-family: sans-serif, serif !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h3 class="text-center">{{$shippment->order->api_id}}</h3>
+    {{-- Shipment --}}
+
+    <h5>Verzenddatum:</h3>
+        <div>
+            @if (!$shippment->has_label)
+                <div class="child">
+                    <ul>
+                        <li class="red">
+                            Bol.com nr:
+                            {{$shippment->order->api_id}}
+                        </li>
+                        <li>
+                            Afzender:
+                        </li>
+                        <li>
+                            Borvat.com
+                        </li>
+                        <li>
+                            Overwelving 2
+                        </li>
+                        <li>
+                            7201LT Zutphen
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div style="display: inline-block;" style="padding-left:10% !important;">
+                    @if (@$shippment->client->country != 'NL')
+                        <img src="{{$outside_netherlands_logo}}" alt=""
+                            width="300">
+                    @else
+                        <img src="{{$inside_netherlands_logo}}" alt="" width="70%">
+                    @endif
+                </div>
+            @endif
+        </div>
+
+
+
+        @if (!$shippment->has_label)
+            <div class="parent">
+                <div class="child no-border">
+                    <img src="{{$borvat_logo}}" alt="" width="40%">
+                    <br>
+                    <p class="red">{{ 'BS' . $shippment->api_id }}</p>
+                </div>
+
+                <div class="child" style="padding:15px !important;"
+                    style="border:1px solid #000;margin-bottom:15% !important;margin-left:5% !important;">
+                    <ul>
+                        <li>
+                            {{ @$shippment->client->first_name . ' ' . @$shippment->client->last_name }}
+                        </li>
+                        <li>
+                            {{ @$shippment_object_details['streetName'] . ' ' . @$shippment_object_details['houseNumber'] . ' ' . @$shippment_object_details['houseNumberExtension'] }}
+                        </li>
+                        <li>
+                            {{ @$shippment->client->zip_code }} &nbsp;
+                            {{ @$shippment->client->city }}
+                        </li>
+                        <li>
+                            {{ @$shippment->client->country }}
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        @endif
+        </div>
+
+
+</body>
+
+</html>
