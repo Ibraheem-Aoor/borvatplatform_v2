@@ -194,7 +194,7 @@ class ShippmentController extends Controller
             foreach ($shipments as $shipment) {
                 $data['shipment'] = $shipment;
                 $data['products'] = $shipment->products;
-                $pdf = Pdf::loadView('admin.pdf.full-shippment', $data);
+                $pdf = Pdf::loadView('admin.pdf.full-shipment', $data);
                 $pdf->setPaper('A5');
                 $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
                 file_put_contents($temp_pdf, $pdf->output());

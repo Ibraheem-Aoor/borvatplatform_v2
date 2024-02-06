@@ -18,29 +18,32 @@
                 {{-- <button type="button" class="btn btn-primary" onclick="$('#shipment-form').submit();"><i
                         class="fa fa-print"></i></button> --}}
             </div>
-            <div class="d-flex align-items-center justify-content-between mb-4">
-                <form name="search-from" action="{{ route('shippment.search') }}" method="GET">
-                    @csrf
-                    <div class="d-flex">
-                        <input type="date" name="from_date" class="form-control" min="2023-01-01"
-                            value="{{ $from_date ?? \Carbon\Carbon::today()->toDateString() }}">
-                        &nbsp;
-                        <i class="fa fa-arrow-right mt-2"></i>
-                        &nbsp;
-                        <input type="date" name="to_date" class="form-control" min="2023-01-01"
-                            value="{{ $to_date ?? \Carbon\Carbon::tomorrow()->toDateString() }}">
-                        <button type="submit" class="btn-xs btn-primary"><i class="fa fa-search"></i></button>
-                    </div>
-                </form>
-                <div class="col-sm-12">
-                    <h4>TODAY'S SHIPMENTS @if (isset($current_account_name))
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <form name="search-from" action="{{ route('shippment.search') }}" method="GET">
+                        @csrf
+                        <div class="d-flex">
+                            <input type="date" name="from_date" class="form-control" min="2023-01-01"
+                                value="{{ $from_date ?? \Carbon\Carbon::today()->toDateString() }}">
+                            &nbsp;
+                            <i class="fa fa-arrow-right mt-2"></i>
+                            &nbsp;
+                            <input type="date" name="to_date" class="form-control" min="2023-01-01"
+                                value="{{ $to_date ?? \Carbon\Carbon::tomorrow()->toDateString() }}">
+                                &nbsp;
+                            <button type="submit" class="btn-xs btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <h5>TODAY'S SHIPMENTS @if (isset($current_account_name))
                             for {{ $current_account_name }}
-                        @endif
-                    </h4>
-                    <h3 class="text-danger">{{ $today_shipments_count }}</h3>
+                        @endif:
+                        <span class="text-danger">{{ $today_shipments_count }}</span>
+                    </h5>
                 </div>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive mt-3">
                 <form action="" id="filters-form" method="GET">
                     @include('admin.partials.filters', [
                         'bol_accounts' => $bol_accounts,
@@ -78,7 +81,7 @@
     </div>
     <!-- Recent Sales End -->
 
-    @include('admin.partials.edit-shipment-modal')
+    {{-- @include('admin.partials.edit-shipment-modal') --}}
 @endsection
 
 @section('js')

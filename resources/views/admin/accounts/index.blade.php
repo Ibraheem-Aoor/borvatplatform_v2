@@ -116,5 +116,5 @@
     <script>
         var api_data_url = "{{ $ajax_route }}";
     </script>
-    <script src="{{ asset('assets/js/custom/accounts.js?v=0.09') }}"></script>
+    <script src="{{ asset('assets/js/custom/accounts.js?v=0.1') }}"></script>
 @endsection

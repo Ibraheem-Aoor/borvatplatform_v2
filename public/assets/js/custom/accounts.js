@@ -27,17 +27,20 @@ $('#account-create-update-modal').on('shown.bs.modal', function (e) {
     var action = btn.getAttribute('data-action');
     var method = btn.getAttribute('data-method');
     var imagePath = btn.getAttribute('data-image');
-    
+
     if (is_create == 1) {
+        $(this).find('.modal-header h5').text('Create New Bol Account');
         $(this).find('form').attr('action', action);
         $(this).find('form').attr('method', method);
         $('.image-input-wrapper').css('background-image', 'url("' + imagePath + '")');
         $(this).find('button[type="reset"]').click();
     } else {
+        var name = btn.getAttribute('data-name');
+        $(this).find('.modal-header h5').text(`Update ${name} BOL Account`);
         $(this).find('form').attr('action', action);
         $(this).find('form').attr('method', method);
         $('.image-input-wrapper').css('background-image', 'url("' + imagePath + '")');
-        $('#name').val(btn.getAttribute('data-name'));
+        $('#name').val(name);
         $('#client_id').val(btn.getAttribute('data-client-id'));
         $('#client_key').val(btn.getAttribute('data-client-key'));
     }
