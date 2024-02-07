@@ -14,7 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('api_id')->change(); //orderId
             $table->unique([
                 'api_id',
                 'bol_account_id',

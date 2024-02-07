@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('api_id')->unique(); //orderId
+            $table->string('api_id'); //orderId
             $table->boolean('pickup_point')->default(false);
             $table->dateTime('place_date');
             $table->longText('shipment_details')->nullable();
