@@ -8,9 +8,12 @@ use App\Http\Requests\BolAccountRequest;
 use App\Jobs\FetchBolOrdersJob;
 use App\Jobs\FetchBolShipmentsJob;
 use App\Models\BolAccount;
+use App\Models\Order;
 use App\Models\Product;
+use App\Services\BOL\BolShipmentService;
 use App\Traits\BoolApiTrait;
 use App\Traits\OrderTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -94,5 +97,33 @@ class AccountController extends Controller
         return DataTables::of(BolAccount::query())
             ->setTransformer(BolAccountTransformer::class)
             ->make(true);
+    }
+
+    public function fetchAndStoreShipments($id)
+    {
+        try
+        {
+            set_time_limit(0);
+            $bol_account = BolAccount::query()->find($id);
+            $bol_shipments_service = new BolShipmentService($bol_account);
+            $shipments = $bol_shipments_service->fetchShipments();
+            foreach ($shipments as $shipment) {
+                Order::query()->updateOrCreate([
+                    'api_id' => $shipment->order->orderId,
+                    'bol_account_id' => $bol_account->id,
+                ], [
+                    'api_id' => $shipment->order->orderId,
+                    'place_date' => Carbon::parse($shipment->order->orderPlacedDateTime)->toDateTimeString(),
+                    'bol_account_id' => $bol_account->id,
+                    'is_shipped_by_dashboard' => true,
+                ]);
+                $shipment = $bol_shipments_service->findShipment($shipment->shipmentId);
+                $bol_shipments_service->store($shipment->toArray());
+            }
+            dd('DONE');
+        }catch(Throwable $e)
+        {
+            dd($e);
+        }
     }
 }

@@ -106,6 +106,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/store', [AccountController::class, 'store'])->name('store');
         Route::post('/update/{id}', [AccountController::class, 'update'])->name('update');
         Route::get('/table-data', [AccountController::class, 'getTableData'])->name('table_data');
+        Route::get('fetch-shipments/{id}' , [AccountController::class, 'fetchAndStoreShipments']);
     });
 
     Route::get('/clear-cache', [HomeController::class, 'clearCache'])->name('clear-cache');
