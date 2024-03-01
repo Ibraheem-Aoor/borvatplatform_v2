@@ -29,10 +29,9 @@ class HomeController extends Controller
     {
         $s = Browsershot::html('<h2>TEST</h2>')
         ->noSandbox()
-        ->setNodeBinary('C:/Program Files/nodejs/node.exe')
-        ->setChromePath("C:\Program Files\Google\Chrome\Application\chrome.exe")->pdf();
+        ->pdf();
 
-        
+
         dd($s);
         $data['top_products_eans'] = [];
         $data['top_products_sales'] = [];
