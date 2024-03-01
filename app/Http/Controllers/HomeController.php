@@ -31,6 +31,8 @@ class HomeController extends Controller
         ->noSandbox()
         ->setNodeBinary('C:/Program Files/nodejs/node.exe')
         ->setChromePath("C:\Program Files\Google\Chrome\Application\chrome.exe")->pdf();
+
+        
         dd($s);
         $data['top_products_eans'] = [];
         $data['top_products_sales'] = [];
