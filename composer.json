@@ -23,6 +23,7 @@
         "myparcelnl/sdk": "^7.4",
         "picqer/bol-retailer-php-client": "^10.0",
         "psr/simple-cache": "^2.0",
+        "spatie/browsershot": "^3.61",
         "spatie/laravel-backup": "^8.1",
         "yajra/laravel-datatables": "^9.0",
         "yajra/laravel-datatables-oracle": "^10.0"
