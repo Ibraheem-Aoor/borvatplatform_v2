@@ -163,8 +163,8 @@ class ShippmentController extends Controller
             set_time_limit(0);
             $ids = $request->id;
             $is_mail_allowed = true;
-            $data['inside_netherlands_logo'] = asset("assets/img/inside_netherlands_logo.jpg");
-            $data['outside_netherlands_logo'] = asset("assets/img/outside_netherlands_logo.jpg");
+            $data['inside_netherlands_logo'] = public_path("assets/img/inside_netherlands_logo.jpg");
+            $data['outside_netherlands_logo'] = public_path("assets/img/outside_netherlands_logo.jpg");
             $data['iterator'] = [];
             $data['page_count'] = 1;
             $merger = new Merger;
@@ -195,6 +195,7 @@ class ShippmentController extends Controller
     {
         foreach ($data['products'] as $product) {
             $data['product'] = $product;
+            $data['product_properties'] = $product->properties()->select(['id' , 'name'])->where('is_active' , true)->get();
             $pdf = Pdf::loadView('admin.pdf.full-shipment', $data);
             $pdf->setPaper('A5');
             $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
@@ -210,10 +211,10 @@ class ShippmentController extends Controller
     public function proccessShipmentLabel(&$data)
     {
         $shipment = $data['shipment'];
-        if (!$shipment->has_label) {
+        if ($shipment->has_label) {
             $label = public_path('storage/labels/' . $shipment->api_id . '.pdf');
             array_push($data['iterator'], $label);
-        } elseif (!isset($shipment->transport['shippingLabelId'])) {
+        } elseif (isset($shipment->transport['shippingLabelId'])) {
             $bol_shipment_service = new BolShipmentService($shipment->account);
             $shipping_label_id = @$shipment->transport['shippingLabelId'];
             $label = $bol_shipment_service->getLabel($shipping_label_id);

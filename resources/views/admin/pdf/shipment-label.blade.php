@@ -103,37 +103,35 @@
 
     <h5>Verzenddatum:</h3>
         <div>
-            @if (!$shipment->has_label)
-                <div class="child">
-                    <ul>
-                        <li class="red">
-                            Bol.com nr:
-                            {{ $shipment->order?->api_id }}
-                        </li>
-                        <li>
-                            Afzender:
-                        </li>
-                        <li>
-                            Borvat.com
-                        </li>
-                        <li>
-                            Overwelving 2
-                        </li>
-                        <li>
-                            7201LT Zutphen
-                        </li>
-                    </ul>
+            <div class="child">
+                <ul>
+                    <li class="red">
+                        Bol.com nr:
+                        {{ $shipment->order?->api_id }}
+                    </li>
+                    <li>
+                        Afzender:
+                    </li>
+                    <li>
+                        Borvat.com
+                    </li>
+                    <li>
+                        Overwelving 2
+                    </li>
+                    <li>
+                        7201LT Zutphen
+                    </li>
+                </ul>
 
-                </div>
+            </div>
 
-                <div style="display: inline-block;" style="padding-left:10% !important;">
-                    @if (@$shipment->country_code != 'NL')
-                        <img src="{{ $outside_netherlands_logo }}" alt="" width="300">
-                    @else
-                        <img src="{{ $inside_netherlands_logo }}" alt="" width="70%">
-                    @endif
-                </div>
-            @endif
+            <div style="display: inline-block;" style="padding-left:10% !important;">
+                @if (@$shipment->country_code != 'NL')
+                    <img src="{{ $outside_netherlands_logo }}" alt="" width="300">
+                @else
+                    <img src="{{ $inside_netherlands_logo }}" alt="" width="70%">
+                @endif
+            </div>
         </div>
 
 

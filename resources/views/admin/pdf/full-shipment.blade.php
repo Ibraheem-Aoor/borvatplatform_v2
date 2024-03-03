@@ -285,7 +285,8 @@
             </td>
             <td>
                 <div class="secondDiv2" style="text-align: center !important;">
-                    <img src="{{ public_path('storage/products/' . $product->id . '/' . $product->image) }}" alt="">
+                    <img src="{{ public_path('storage/products/' . $product->id . '/' . $product->image) }}"
+                        alt="">
                     <div class="intodiv">
                         <p><b>{{ $product->title }}</b></p>
                     </div>
@@ -341,18 +342,16 @@
                 <div class="fristDiv2">
                     {{-- shop logo --}}
                     <div class="fristsq"
-                        style="background-image: url('{{ public_path('storage/'.$shipment->account->logo) }}');background-size:cover !important;">
+                        style="background-image: url('{{ public_path('storage/' . $shipment->account->logo) }}');background-size:cover !important;">
                     </div>
                     <div class="ozDiv">
-                        <div class="smallDivINSecond">
-                            <h2>LED</h2>
-                        </div>
-                        <div class="smallDivINSecond">
-                            <h2>Blauw</h2>
-                        </div>
-                        <div class="smallDivINSecond">
-                            <h2>Plastic</h2>
-                        </div>
+                        @if (!$product_properties->isEmpty())
+                            @foreach ($product_properties as $prop)
+                                <div class="smallDivINSecond">
+                                    <h2>{{ $prop->name }}</h2>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                     <div class="cePhoto">
                         <img src="{{ public_path('assets/img/cephoto.jpg') }}" alt="cephoto">
