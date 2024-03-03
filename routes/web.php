@@ -91,6 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('all-products', [ProductController::class, 'getAllProducts'])->name('get-all');
         Route::get('/get-no-image-products', [ProductController::class, 'getNoImageProducts'])->name('get-no-image');
         Route::post('/edit', [ProductController::class, 'update'])->name('edit');
+        Route::post('/update-props/{id}', [ProductController::class, 'updateProperities'])->name('update_properities');
     });
 
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {

@@ -43,6 +43,7 @@ $(document).ready(function () {
 
 
     $(document).on('submit', 'form.custom-form', function (e) {
+
         e.preventDefault();
         var submitBtn = $(this).find('button[type="submit"]');
         submitBtn.prop('disabled', true);

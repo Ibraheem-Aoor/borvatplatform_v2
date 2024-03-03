@@ -103,127 +103,23 @@
                             <th scope="col">Purchase Place</th>
                             <th scope="col">Purchase Price</th>
                             <th scope="col">Weight</th>
-                            <th scope="col">Width</th>
+                            {{-- <th scope="col">Width</th>
                             <th scope="col">Height</th>
                             <th scope="col">Length</th>
                             <th scope="col">Note</th>
-                            <th scope="col">Content</th>
+                            <th scope="col">Content</th> --}}
                             <th scope="col">Action</th>
                             {{-- <th scope="col">Date</th> --}}
                         </tr>
                     </thead>
-                    {{-- <tbody>
-                        @forelse($products as $product)
-                            <tr>
-                                <td>{{ $product->title }}</td>
-                                <td>{{ $product->ean }}</td>
-                                <td><img id="{{ $product->id }}"
-                                        src="@if ($product->image) {{ Storage::url('products/' . $product->id . '/' . $product->image) }} @else {{ asset('assets/img/product-placeholder.webp') }} @endif"
-                                        width="300" alt=""></td>
-                                <td><button id="btn-{{ $product->id }}" type="button" class="btn-sm btn btn-success"
-                                        data-id="{{ $product->id }}" data-title="{{ $product->title }}"
-                                        @if ($product->image) data-image="{{ Storage::url('products/' . $product->id . '/' . $product->image) }}" @endif
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                            class="fa fa-edit"></i></button></td>
-                            </tr>
-                        @empty
-                        @endforelse
-                    </tbody> --}}
                 </table>
             </div>
         </div>
     </div>
     <!-- Recent Sales End -->
 
-    {{-- Start product edit  Modal --}}
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('product.edit') }}" id="edit-product-form">
-                        <div class="avatar-picture">
-                            <div class="image-input image-input-outline" id="imgUserProfile">
-                                <div class="image-input-wrapper"
-                                    style="background-image: url('{{ asset('assets/img/product-placeholder.webp') }}');">
-                                </div>
-
-                                <label class="btn">
-                                    <i>
-                                        <img src="{{ asset('assets/img/edit.svg') }}" alt="" class="img-fluid">
-                                    </i>
-                                    <input type="file" name="product_image" id="changeImg" accept=".png, .jpg, .jpeg">
-                                    <input type="button" value="Upload" id="uploadButton">
-                                </label>
-
-                            </div>
-                        </div>
-                        <input type="hidden" name="product_id">
-                        <div class="mb-2">
-                            <label for="">Content</label>
-                            <textarea name="content" id="content" cols="30" rows="3" class="form-control"></textarea>
-                        </div>
-                        <div class="mb-2">
-                            <label for="">Note</label>
-                            <textarea name="note" id="note" cols="30" rows="3" class="form-control"></textarea>
-                        </div>
-                        <div class="mb-2">
-                            <input type="text" name="number_of_pieces" class="form-control"
-                                placeholder="Number Of Pieces">
-                        </div>
-                        <div class="mb-2">
-                            <input type="text" name="purchase_place" class="form-control" placeholder="purchase place">
-                        </div>
-                        <div class="mb-2">
-                            <input type="number" name="purchase_price" class="form-control"
-                                placeholder="purchase price (EUR)">
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label for="">Weight</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="">Width</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="">lenth</label>
-
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="">Height</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <input type="number" name="weight" class="form-control" placeholder="gm ">
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="number" name="width" class="form-control" placeholder="cm ">
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="number" name="length" class="form-control" placeholder="cm ">
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="number" name="height" class="form-control" placeholder="cm">
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary"
-                        onclick="event.preventDefault();$('#edit-product-form').submit();">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- End Product Edit Modal --}}
+    @include('admin.products.update-modal')
+    @include('admin.products.properties-modal')
 @endsection
 
 
@@ -263,26 +159,6 @@
                         name: 'weight',
                         searchable: true,
                         orderable: true,
-                    },
-                    {
-                        data: 'width',
-                        name: 'width',
-                    },
-                    {
-                        data: 'height',
-                        name: 'height',
-                    },
-                    {
-                        data: 'length',
-                        name: 'length',
-                    },
-                    {
-                        data: 'note',
-                        name: 'note',
-                    },
-                    {
-                        data: 'content',
-                        name: 'content',
                     },
 
                     {
@@ -393,5 +269,85 @@
                 }
             });
         });
+    </script>
+
+    {{-- product properties --}}
+    <script>
+        var counter = 1;
+
+        function addNewFeature(button) {
+            var html = `<div class="row">
+                              <div class="col-8">
+                                  <div class="form-group p-3 d-flex">
+                                      <input type="text" name="properties[${counter}]"  class="form-control product-props-input"> &nbsp;
+                                      <input type="checkbox"  style="width:30px !important;" name="active_properities[${counter}]" class="product-props-status">
+
+                                  </div>
+
+                              </div>
+                              <div class="col-2 d-flex">
+                                  <button type="button" class="add-feature btn-sm mt-3 btn-primary"
+                                      onclick="addNewFeature($(this));"><i class="fa fa-plus"></i></button> &nbsp;
+                                      <button type="button" class="remove_feature btn-sm mt-3 btn-danger"
+                onclick="deleteFeature($(this));"><i class="fa fa-trash"></i></button>
+                              </div>
+                          </div>`;
+            ++counter;
+            button.parent().parent().after(html);
+        };
+
+        function deleteFeature(btn) {
+            btn.parent().parent().remove();
+        };
+    </script>
+
+    <script>
+        $('#product-properities-modal').on('shown.bs.modal', function(e) {
+            var btn = e.relatedTarget;
+            $(this).find('form').attr('action', btn.getAttribute('data-action'));
+            $(this).find('form').attr('method', btn.getAttribute('data-method'));
+            $(this).find('.modal-title').html(btn.getAttribute('data-title'));
+            var jsonData = btn.getAttribute('data-props');
+            var props = JSON.parse(jsonData);
+            handleProductPropsDisplay(props);
+        });
+        // Handle Dispaying of The Product Properties.
+        function handleProductPropsDisplay(props) {
+            if (props.length > 0) {
+                $('#props-container').html('');
+                var props_html = ``;
+                // Populate properties
+                $.each(props, function(index, property) {
+                    var is_checked = property.is_active ? 'checked' : '';
+                    var propertyInput = `<div class="row"><div class="col-8"><div class="form-group p-3 d-flex">
+                        <input type="text" name="properties[${counter}]" value="${property.name}" class="form-control product-props-input">
+                        &nbsp;
+                        <input type="checkbox" style="width:30px !important;" name="active_properities[${counter++}]" class="product-props-status"  ${is_checked}
+                        >
+                        </div></div> <div class="col-2 d-flex">
+                                  <button type="button" class="add-feature btn-sm mt-3 btn-primary"
+                                      onclick="addNewFeature($(this));"><i class="fa fa-plus"></i></button> &nbsp;
+                                      <button type="button" class="remove_feature btn-sm mt-3 btn-danger"
+                onclick="deleteFeature($(this));"><i class="fa fa-trash"></i></button>
+                              </div></div>`;
+                    props_html += propertyInput;
+                });
+                $('#props-container').html(props_html);
+            } else {
+                var default_html = `<div class="row"> <div class="col-8">
+                                  <div class="form-group p-3 d-flex">
+                                      <input type="text" name="properties[0]"  class="form-control product-props-input">
+                                      &nbsp;
+                                      <input type="checkbox" style="width:30px !important;" name="active_properities[0]" class="product-props-status">
+                                  </div>
+                              </div>
+                              <div class="col-2">
+                                  <button type="button" class="add-feature btn-sm mt-3 btn-primary"
+                                      onclick="addNewFeature($(this));"><i class="fa fa-plus"></i></button>
+                              </div></div>`;
+                counter = 1;
+                $('#props-container').html(default_html);
+            }
+        }
     </script>
 @endsection
