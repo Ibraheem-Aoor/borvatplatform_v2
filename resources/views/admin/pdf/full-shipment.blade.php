@@ -1,215 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@php
-    $product_image_width = 200;
-    $table_font_size = '13px !important';
-    if ($shipment->products()->count() > 1) {
-        $product_image_width = 140;
-        $table_font_size = '10px !important';
-    }
-@endphp
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <title>Document</title>
     <style>
-        ul {
-            list-style-type: none;
-        }
-
-        div.child {
-            float: left;
-            width: 40%;
-        }
-
-        div.child>div {
-            margin-right: 10px;
-            height: 100px;
-            box-sizing: border-box;
-            /* background: yellow; */
-            text-align: center;
-            border: 1px solid red;
-        }
-
-        .no-border {
-            border: none;
-            margin-top: 5% !important;
-        }
-
-        img {
-            /* margin-top: 5% !important; */
-        }
-
-        ul {
-            list-style-type: none !important;
-            list-style: none !important;
-        }
-
-        li {
-            list-style: none !important;
-        }
-
-        .bold {
-            font-weight: bold !important;
-        }
-
-        .red {
-            color: red !important;
+        * {
+            margin-left: 0;
         }
 
         body {
-            font-size: 12px !important;
+            font-family: 'Rubik', sans-serif;
+            font-size: 10px;
+            margin: auto !important;
         }
 
-        .full-width {
-            width: 100% !important;
+
+        .textdiv {
+            border: 1px solid black;
+            width: 150%;
+            background-color: rgb(248, 248, 248);
+            border-radius: 11px;
+            padding: 7px 17px;
         }
 
-        .mb-2 {
-            margin-bottom: 2% !important;
-        }
-
-        .text-center {
+        .textdiv h1 {
             text-align: center !important;
+            font-size: 25px;
+            letter-spacing: 20px;
+            margin: 0;
         }
 
-        .text-left {
-            text-align: left !important;
+        .fristDiv {
+            width: 60%;
         }
 
-        .text-right {
-            text-align: right !important;
+        .secondDiv {
+            margin-left: 10px;
+            margin-top: 10px;
         }
 
-        .text-danger {
-            color: red !important;
+        .fristDiv2 {
+            width: 29%;
+            margin-top: -403px;
         }
 
-        .borderd-table {
-            font-size: {{ $table_font_size }},
+        .fristsq {
+            width: 115%;
+            height: 80px;
+            border: 2px solid black;
+            background-image: url("{{ public_path('assets/img/bg_1.png') }}");
+            background-size: cover;
+            margin-bottom: 10px;
+            border-radius: 20px;
         }
 
-        .borderd-table tr:first-of-type td {
-            border: none !important;
+        .fristsq h1 {
+            text-align: center !important;
+            line-height: 50px;
+            color: #3c3c3c;
+            font-weight: bold;
+            /* font-family:'Arial'; */
         }
 
-        .borderd-table tr {
-            height: 50px !important;
+        .ozDiv {
+            width: 88%;
+            border: 2px solid black;
+            border-radius: 20px;
+            padding: 10px;
+            margin-bottom: 10px;
         }
 
-        body {
-            font-family: sans-serif, serif !important;
+        .smallDivINSecond {
+            height: 45px;
+            background-color: rgb(111, 111, 111);
+            margin-bottom: 15px;
+            border-radius: 65px;
+            border: 2px solid black;
+            box-shadow: 3px 10px 15px black;
         }
 
-        .fs-30 {
-            font-size: 50px !important;
+        .smallDivINSecond h2 {
+            color: white;
+            font-size: 16px;
+            text-align: center !important;
+            font-weight: bold;
+            text-shadow: 3px 3px 3px black;
         }
+
+        .cePhoto {
+            width: 95%;
+            height: 64px;
+            background-color: white;
+            border-radius: 10px;
+            border: 2px solid black;
+            padding: 3px 7px;
+        }
+
+        .cePhoto img {
+            width: 80%;
+            height: 100%;
+        }
+
+        .secondDiv2 {
+            height: 400px;
+            background-image: url("{{ public_path('assets/img/bg_3.png') }}");
+            background-size: cover !important;
+            width: 310px;
+            margin-top: 70px;
+            margin-left: -170px;
+            border-radius: 30px;
+            border: 1px solid black;
+            position: relative;
+            border-bottom: none !important;
+        }
+
+        .secondDiv2 img {
+            width: 200px !important;
+            height: 200px !important;
+            margin: auto !important;
+            margin-top: 30px !important;
+            border-radius: 20px;
+        }
+
+        .intodiv {
+            background-color: rgb(0, 0, 0);
+            margin: auto !important;
+            margin-bottom: 5px;
+            width: 85%;
+            border-radius: 20px;
+        }
+
+        .intodiv p {
+            color: white;
+            text-align: center !important;
+            font-size: larger !important;
+            padding: 5px !important;
+        }
+
+        .thierdDiv {
+            height: 55px;
+            background-image: url("{{ public_path('assets/img/bg_4.png') }}");
+            background-size: cover !important;
+            width: 100%;
+            position: absolute !important;
+            bottom: 0 !important;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+
+        .thierdDiv p {
+            text-align: center !important;
+            line-height: 0px;
+            letter-spacing: 2px;
+            font-size: x-large !important;
+            text-align: center !important;
+            padding-top: 10px !important;
+        }
+
+
+
+
+        .oneDiv {
+            background-image: url("{{ public_path('assets/img/bg_2.png') }}");
+            background-size: cover;
+            padding: 5px 12px 5px 3px;
+            border: 1px solid black;
+            border-radius: 20px;
+            width: 95%;
+            margin-bottom: 10px;
+        }
+
+        .oneDiv p {
+            color: white;
+            font-size: 8px;
+        }
+
+        .oneDiv span {
+            color: black;
+            background-color: white;
+            padding: 5px;
+        }
+
+        .oneDiv h1 {
+            position: relative;
+            background-color: white;
+            padding: 6px 7px;
+            text-align: center !important;
+            width: 75%;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .oneDiv h1::after {
+            position: absolute;
+            content: "";
+            border-top: 21px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-left: 18px solid white;
+            top: 1px;
+            left: 92%;
+        }
+
+        .oneDiv2 {
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 20px;
+            width: 95%;
+            margin-bottom: 10px;
+        }
+
+        .oneDiv2 p {
+            color: rgb(0, 0, 0);
+            font-size: 8px;
+        }
+
+        .oneDiv2 span {
+            color: black;
+            background-color: rgb(0, 0, 0);
+            padding: 5px;
+            color: white;
+        }
+
+        .oneDiv2 h1 {
+            background-color: rgb(0, 0, 0);
+            padding: 5px;
+            color: white;
+            text-align: center !important;
+            font-size: 13px;
+        }
+
+        .oneDiv3 {
+            padding: 8px;
+            border: 1px solid black;
+            border-radius: 20px;
+            width: 95%;
+            margin-bottom: 10px;
+            background-color: white;
+        }
+
+        .oneDiv3 p {
+            color: rgb(0, 0, 0);
+            font-size: 8px;
+        }
+
+        .oneDiv3 span {
+            color: black;
+            background-color: rgb(0, 0, 0);
+            padding: 5px;
+            color: white;
+        }
+
+        .oneDiv3 h1 {
+            color: red;
+            text-align: center !important;
+            font-size: 27px;
+        }
+
+        .oneDivTD {
+            margin-top: -225px;
+            margin-left: -10px;
+        }
+
+        /* .arrow-right {
+      width: 0;
+      height: 0;
+
+    } */
     </style>
-
 </head>
 
 <body>
-
-    {{-- order --}}
-
-    {{-- Order No One Time --}}
-    <table class="full-width" border="1">
+    <table>
         <tr>
-            <td class="text-center">
-                <img src="{{ $bol_logo }}" width="80px" alt="">
+            <td style="padding: 10px;">
+                <div class="textdiv oneDivTD">
+                    <h1>BORVAT</h1>
+                </div>
+
             </td>
-            <td class="text-center">
-                <h2 class="text-danger">{{ $page_count }}</h2> <br>
-                <h2 class="bold" style="text-align: right !important;">{{ $shipment->order->api_id }}</h2>
+            <td>
+                <div class="secondDiv2" style="text-align: center !important;">
+                    <img src="{{ public_path('storage/products/' . $product->id . '/' . $product->image) }}" alt="">
+                    <div class="intodiv">
+                        <p><b>{{ $product->title }}</b></p>
+                    </div>
+                    <div class="thierdDiv">
+                        <p><b>{{ $product->ean }}</b></p>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="secondDiv">
+                    {{-- fixed text --}}
+                    <div class="oneDiv">
+                        <h1>MADE IN <br> CHINA
+                            <div class="arrow-right"></div>
+                        </h1>
+                        <br>
+                        <p><span>SHIPPER:</span> <br><br>
+                            GUANGXI ARCHI <br>
+                            TECHNOLOGY CO.,LTD <br>
+                            <br>
+                            <span>Address:</span> <br><br>
+                            6-4, Unit 2, Building 1, <br>
+                            Changhong Century, <br>
+                            278 pingshan Avenue,
+                            Liuzhou City <br>
+                            Zip code: 545001
+                        </p>
+                    </div>
+                    {{-- fixed text --}}
+                    <div class="oneDiv2">
+                        <h1>IMPORTER</h1>
+
+                        <p>
+                            Borvat.com B.V. <br>
+                            KVK: 87008661<br>
+                            <br>
+                            <span>Address:</span> <br><br>
+                            Gonggrijpstraat35<br>
+                            8607BD,Sneek,<br>
+                            TheNetherlands
+                        </p>
+                    </div>
+                    <div class="oneDiv3" style="height: 55px;">
+                        {{-- quanttiy --}}
+                        <h1>{{ $product->pivot->quantity }}</h1>
+                    </div>
+                    <div></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="fristDiv2">
+                    {{-- shop logo --}}
+                    <div class="fristsq"
+                        style="background-image: url('{{ public_path('storage/'.$shipment->account->logo) }}');background-size:cover !important;">
+                    </div>
+                    <div class="ozDiv">
+                        <div class="smallDivINSecond">
+                            <h2>LED</h2>
+                        </div>
+                        <div class="smallDivINSecond">
+                            <h2>Blauw</h2>
+                        </div>
+                        <div class="smallDivINSecond">
+                            <h2>Plastic</h2>
+                        </div>
+                    </div>
+                    <div class="cePhoto">
+                        <img src="{{ public_path('assets/img/cephoto.jpg') }}" alt="cephoto">
+                    </div>
+                </div>
             </td>
         </tr>
     </table>
-    {{-- End Order No --}}
-    @foreach ($products as $product)
-        @php
-            $product_image = public_path('storage/products/' . $product->id . '/' . $product->image);
-        @endphp
-        <table class="full-width borderd-table" border="1">
-            <tr>
-                <td class="text-left"><img src="{{ $product_image }}" alt="" width="{{ $product_image_width }}">
-                </td>
-                <td class="text-right" colspan="2">
-                    <ul style="list-style-type: none !important;">
-
-                        <li class="mb-2">
-                            {{ $product->title }}
-                        </li>
-                        <li class="mb-2">
-                            <span class="bold">EAN:</span>{{ $product->ean }}
-                        </li>
-                        <li>
-                            <span class="bold text-danger">Anatal</span>: {{ $product->pivot->quantity }}
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-            <tr class="tr-bordered">
-                @isset($product->content)
-                    <td class="text-center bold text-danger">
-                        {{ $product->content }}
-                    </td>
-                @endisset
-                <td class="text-center bold text-danger" dir>
-                    @if ($product?->note)
-                        {{ $product?->note }}
-                    @else
-                        &nbsp;
-                    @endif
-                </td>
-                <td class="text-center text-danger bold fs-30">
-                    <h3>
-                        {{ $product?->number_of_pieces * $product->pivot->quantity }}
-                    </h3>
-                </td>
-                <td class="text-center">
-                    {{-- <img src="{{ public_path('storage/'.$shipment->account->logo) }}" width="90"> --}}
-                </td>
-            </tr>
-        </table>
-    @endforeach
-
-    <div>
-        <table>
-            <tr>
-                <td style="text-align: left !important;">
-                    <div>
-                        {{ $shipment->firstName }} &nbsp; {{ $shipment->surname }}
-                    </div>
-                    <div>
-                        {{ $shipment->street_name }} &nbsp;
-                        {{ $shipment->house_number }}
-                    </div>
-                    <div>
-                        {{ $shipment->zip_code }} &nbsp; {{ $shipment->city }}
-                    </div>
-                    <div>
-                        {{ $shipment->country_code }}
-                    </div>
-                    <div>
-                        <span>Verzenddatum:
-                            {{ $today_date ?? $shipment->order?->place_date }}
-                        </span>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-
-
-
-    <br>
-
-
-
-
 </body>
 
 </html>

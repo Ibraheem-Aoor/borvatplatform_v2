@@ -79,7 +79,7 @@
         }
 
         .borderd-table {
-            font-size: {{ $table_font_size }},
+            font-size: 14px !important,
         }
 
         .borderd-table tr:first-of-type td {
@@ -98,7 +98,7 @@
 
 <body>
 
-    <h3 class="text-center">{{ $shipment->order->api_id }}</h3>
+    <h3 class="text-center">{{ $shipment->order?->api_id }}</h3>
     {{-- Shipment --}}
 
     <h5>Verzenddatum:</h3>
@@ -108,7 +108,7 @@
                     <ul>
                         <li class="red">
                             Bol.com nr:
-                            {{ $shipment->order->api_id }}
+                            {{ $shipment->order?->api_id }}
                         </li>
                         <li>
                             Afzender:
@@ -138,35 +138,33 @@
 
 
 
-        @if (!$shipment->has_label)
-            <div class="parent">
-                <div class="child no-border">
-                    <img src="" alt="" width="40%">
-                    <br>
-                    <p class="red">{{ 'BS' . $shipment->api_id }}</p>
-                </div>
-
-                <div class="child" style="padding:15px !important;"
-                    style="border:1px solid #000;margin-bottom:15% !important;margin-left:5% !important;">
-                    <ul>
-                        <li>
-                            {{ @$shipment->first_name . ' ' . @$shipment->surname }}
-                        </li>
-                        <li>
-                            {{ @$shipment->street_name . ' ' . @$shipment->house_no . ' ' . @$shipment->shipment_details['houseNumberExtension'] }}
-                        </li>
-                        <li>
-                            {{ @$shipment->zip_code }} &nbsp;
-                            {{ @$shipment->city }}
-                        </li>
-                        <li>
-                            {{ @$shipment->country_code }}
-                        </li>
-                    </ul>
-                </div>
-
+        <div class="parent">
+            <div class="child no-border">
+                <img src="" alt="" width="40%">
+                <br>
+                <p class="red">{{ 'BS' . $shipment->api_id }}</p>
             </div>
-        @endif
+
+            <div class="child" style="padding:15px !important;"
+                style="border:1px solid #000;margin-bottom:15% !important;margin-left:5% !important;">
+                <ul>
+                    <li>
+                        {{ @$shipment->first_name . ' ' . @$shipment->surname }}
+                    </li>
+                    <li>
+                        {{ @$shipment->street_name . ' ' . @$shipment->house_no . ' ' . @$shipment->shipment_details['houseNumberExtension'] }}
+                    </li>
+                    <li>
+                        {{ @$shipment->zip_code }} &nbsp;
+                        {{ @$shipment->city }}
+                    </li>
+                    <li>
+                        {{ @$shipment->country_code }}
+                    </li>
+                </ul>
+            </div>
+
+        </div>
         </div>
 
 

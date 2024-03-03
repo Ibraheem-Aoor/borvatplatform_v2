@@ -69,7 +69,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/get-archive-data', [ShippmentController::class, 'getArchiveShipments'])->name('get-archive-data');
         Route::get('/downlaods', [ShippmentController::class, 'getRecentDonwloads'])->name('recents');
         Route::get('/downlaod/{id}', [ShippmentController::class, 'downloadShipmentPdf'])->name('recents.download');
-        Route::post('/pdf', [ShippmentController::class, 'generateShippmentPdf'])->name('pdf');
         Route::post('/full-pdf', [ShippmentController::class, 'generateFullShippmentPdf'])->name('full-pdf');
         Route::post('store-note', [ShippmentController::class, 'storeNote'])->name('store-note');
         Route::get('/serach', [ShippmentController::class, 'search'])->name('search');

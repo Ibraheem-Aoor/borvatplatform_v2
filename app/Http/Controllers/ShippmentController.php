@@ -10,6 +10,7 @@ use App\Mail\OrderShippedMail;
 use App\Models\BolAccount;
 use App\Models\BusinessSetting;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\Shipment;
 use App\Services\BOL\BolShipmentService;
 use App\Services\PDF_HTML;
@@ -42,8 +43,15 @@ class ShippmentController extends Controller
 
     public function index(Request $request)
     {
-        $data['form_route'] = route('shippment.pdf');
+        $shipments = Shipment::query()->whereHas('products');
+        foreach ($shipments as $shipment) {
+            if ($shipment->products->count() > 0) {
+                dd($shipment);
+            }
+        }
+        // $data['form_route'] = route('shippment.pdf');
         $data['full_pdf_route'] = route('shippment.full-pdf');
+        $data['form_route'] =   $data['full_pdf_route'];
         $data['full_excel_route'] = route('shippment.full-excel');
         $data['full_pdf_copy_route'] = route('shippment.full-pdf', ['is_copy' => true]);
         $data['store'] = $request->store;
@@ -56,6 +64,9 @@ class ShippmentController extends Controller
 
 
 
+    /**
+     * Datatable Of the Newly Incoming API Shipments
+     */
     public function getApiShipments(Request $request)
     {
         return DataTables::of(
@@ -77,6 +88,9 @@ class ShippmentController extends Controller
             ->setTransformer(ShipmentTransformer::class)
             ->make(true);
     }
+    /**
+     * Datatable Of the ALL PI Shipments
+     */
     public function getArchiveShipments(Request $request)
     {
         $query = Shipment::query();
@@ -120,8 +134,9 @@ class ShippmentController extends Controller
 
     public function archive(Request $request)
     {
-        $data['form_route'] = route('shippment.pdf');
+        // $data['form_route'] = route('shippment.pdf');
         $data['full_pdf_route'] = route('shippment.full-pdf');
+        $data['form_route'] =   $data['full_pdf_route'];
         $data['full_excel_route'] = route('shippment.full-excel');
         $data['full_pdf_copy_route'] = route('shippment.full-pdf', ['is_copy' => true]);
         $data['table_data_url'] = route('shippment.get-archive-data', [
@@ -135,91 +150,30 @@ class ShippmentController extends Controller
     }
 
 
-
-
-
-    public function generateShippmentPdf(Request $request)
-    {
-        ini_set('max_execution_time', 240); // 120 (seconds) = 2 Minutes
-        set_time_limit(0);
-        $ids = $request->id;
-        if ($ids) {
-            $shippments = Shipment::all();
-            $views = [];
-            $pdf = null;
-            $shipment_sender_details = json_decode(BusinessSetting::where('key', 'shipment_sender_details')->first()->value, true);
-            foreach ($shippments as $shippment) {
-                if (in_array($shippment->id, $ids)) {
-                    if (is_null($pdf)) {
-                        $pdf = PDF::loadView('admin.pdf.shippment-pdf', compact('shippment', 'shipment_sender_details'));
-                        continue;
-                    }
-                    // Add another page and add HTML from view to this
-                    $pdf->getMpdf()->AddPage();
-                    $pdf->getMpdf()->WriteHTML((string) view('admin.pdf.shippment-pdf', compact('shippment', 'shipment_sender_details')));
-                }
-            }
-            return $pdf->download('shipment-' . date('Y-M-d') . '.pdf');
-        }
-    }
-
-
+    /**
+     * Generate The full Shipment With Products printing template.
+     */
 
     public function generateFullShippmentPdf(Request $request)
     {
         try {
-
             if (ob_get_level() > 0) {
                 ob_clean();
             }
-            ini_set('max_execution_time', 900); // 120 (seconds) = 2 Minutes
             set_time_limit(0);
             $ids = $request->id;
             $is_mail_allowed = true;
-            $data['bol_logo'] = asset('assets/img/bol-logo.jpg');
-            // $data['shipment_sender_details'] = json_decode(BusinessSetting::where('key', 'shipment_sender_details')->first()->value, true);
             $data['inside_netherlands_logo'] = asset("assets/img/inside_netherlands_logo.jpg");
             $data['outside_netherlands_logo'] = asset("assets/img/outside_netherlands_logo.jpg");
             $data['iterator'] = [];
             $data['page_count'] = 1;
-            $data['table_font_size'] = '13px !important';
             $merger = new Merger;
-            if ($request->is_copy) {
-                $data['today_date'] = Carbon::today()->toDateString();
-            }
-            $views = [];
             $shipments = Shipment::query()->whereIn('id', $ids)->get();
-            // $zinapesly_shipping_service = new ZianpeslyShippingService();
-            $zinapesly_rate_limit_counter = 0;
             foreach ($shipments as $shipment) {
                 $data['shipment'] = $shipment;
                 $data['products'] = $shipment->products;
-                $pdf = Pdf::loadView('admin.pdf.full-shipment', $data);
-                $pdf->setPaper('A5');
-                $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
-                file_put_contents($temp_pdf, $pdf->output());
-                array_push($data['iterator'], $temp_pdf);
-                if ($shipment->has_label) {
-                    $label = public_path('storage/labels/' . $shipment->api_id . '.pdf');
-                    array_push($data['iterator'], $label);
-                } elseif (isset($shipment->transport['shippingLabelId'])) {
-                    $bol_shipment_service = new BolShipmentService($shipment->account);
-                    $shipping_label_id = @$shipment->transport['shippingLabelId'];
-                    $label = $bol_shipment_service->getLabel($shipping_label_id);
-                    if ($label) {
-                        $path = 'labels/' . $shipment->api_id . '.pdf';
-                        $label = saveImage($path, $label);
-                        $shipment->has_label = true;
-                        $shipment->save();
-                        array_push($data['iterator'], $label);
-                    }
-                }else {
-                    $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
-                    $pdf->setPaper('A5');
-                    $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
-                    file_put_contents($temp_pdf, $pdf->output());
-                    array_push($data['iterator'], $temp_pdf);
-                }
+                $this->proccessProductOrderPrint($data);
+                $this->proccessShipmentLabel($data);
                 $shipment->is_printed = true;
                 $shipment->save();
                 $data['page_count'] += 1;
@@ -230,6 +184,52 @@ class ShippmentController extends Controller
             return response()->download(public_path('result.pdf'), 'BOL-Shipments-' . Carbon::now()->toDateTimeString() . '.pdf');
         } catch (Throwable $e) {
             dd($e);
+        }
+    }
+
+
+    /**
+     * Handling The Products Printing. 'single/multi'
+     */
+    public function proccessProductOrderPrint(&$data)
+    {
+        foreach ($data['products'] as $product) {
+            $data['product'] = $product;
+            $pdf = Pdf::loadView('admin.pdf.full-shipment', $data);
+            $pdf->setPaper('A5');
+            $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
+            file_put_contents($temp_pdf, $pdf->output());
+            array_push($data['iterator'], $temp_pdf);
+        }
+    }
+
+
+    /**
+     * Proccessing the label of the shipment.
+     */
+    public function proccessShipmentLabel(&$data)
+    {
+        $shipment = $data['shipment'];
+        if (!$shipment->has_label) {
+            $label = public_path('storage/labels/' . $shipment->api_id . '.pdf');
+            array_push($data['iterator'], $label);
+        } elseif (!isset($shipment->transport['shippingLabelId'])) {
+            $bol_shipment_service = new BolShipmentService($shipment->account);
+            $shipping_label_id = @$shipment->transport['shippingLabelId'];
+            $label = $bol_shipment_service->getLabel($shipping_label_id);
+            if ($label) {
+                $path = 'labels/' . $shipment->api_id . '.pdf';
+                $label = saveImage($path, $label);
+                $shipment->has_label = true;
+                $shipment->save();
+                array_push($data['iterator'], $label);
+            }
+        } else {
+            $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
+            $pdf->setPaper('A5');
+            $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
+            file_put_contents($temp_pdf, $pdf->output());
+            array_push($data['iterator'], $temp_pdf);
         }
     }
 
@@ -265,8 +265,9 @@ class ShippmentController extends Controller
 
     public function search(Request $request)
     {
-        $data['form_route'] = route('shippment.pdf');
+        // $data['form_route'] = route('shippment.pdf');
         $data['full_pdf_route'] = route('shippment.full-pdf');
+        $data['form_route'] =   $data['full_pdf_route'];
         $data['full_excel_route'] = route('shippment.full-excel');
         $data['table_data_url'] = route('shippment.get-archive-data', $request->query());
         $data['from_date'] = $request->query('from_date');

@@ -27,12 +27,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        $s = Browsershot::html('<h2>TEST</h2>')
-        ->noSandbox()
-        ->pdf();
-
-
-        dd($s);
         $data['top_products_eans'] = [];
         $data['top_products_sales'] = [];
         $top_products = Product::orderByDesc('num_of_sales')->take(20)->pluck('num_of_sales', 'ean');
