@@ -351,6 +351,16 @@
                                     <h2>{{ $prop->name }}</h2>
                                 </div>
                             @endforeach
+                        @else
+                        <div class="smallDivINSecond">
+                            <h2>&nbsp;</h2>
+                        </div>
+                        <div class="smallDivINSecond">
+                            <h2>&nbsp;</h2>
+                        </div>
+                        <div class="smallDivINSecond">
+                            <h2>&nbsp;</h2>
+                        </div>
                         @endif
                     </div>
                     <div class="cePhoto">
