@@ -164,7 +164,7 @@ class ShippmentController extends Controller
             $ids = $request->id;
             $is_mail_allowed = true;
             $data['inside_netherlands_logo'] = public_path("assets/img/inside_netherlands_logo.jpg");
-            $data['outside_netherlands_logo'] = public_path("assets/img/outside_netherlands_logo.jpg");
+            $data['outside_netherlands_logo'] = public_path("assets/img/outside_netherlands_logo-removebg-preview.png");
             $data['iterator'] = [];
             $data['page_count'] = 1;
             $merger = new Merger;
@@ -227,11 +227,11 @@ class ShippmentController extends Controller
             }
         } else {
             $pdf = Pdf::loadView('admin.pdf.shipment-label', $data);
-            $pdf->setPaper('A5');
+            $pdf->setPaper(array(0,0,420.00,370.80));
             $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
             file_put_contents($temp_pdf, $pdf->output());
             array_push($data['iterator'], $temp_pdf);
-        }
+        // }
     }
 
 

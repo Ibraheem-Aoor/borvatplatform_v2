@@ -92,6 +92,8 @@
 
         body {
             font-family: sans-serif, serif !important;
+            border: 2px solid black !important;
+            padding: 5px !important;
         }
     </style>
 </head>
@@ -127,7 +129,7 @@
 
             <div style="display: inline-block;" style="padding-left:10% !important;">
                 @if (@$shipment->country_code != 'NL')
-                    <img src="{{ $outside_netherlands_logo }}" alt="" width="300">
+                    <img src="{{ $outside_netherlands_logo }}" alt="" width="50%">
                 @else
                     <img src="{{ $inside_netherlands_logo }}" alt="" width="70%">
                 @endif
