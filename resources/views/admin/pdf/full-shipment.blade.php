@@ -52,12 +52,11 @@
         .fristsq {
             width: 115%;
             height: 80px;
-            border: 2px solid black;
-            background-image: url("{{ public_path('assets/img/bg_1.png') }}");
             background-size: cover;
             margin-bottom: 10px;
             border-radius: 20px;
         }
+        
 
         .fristsq h1 {
             text-align: center !important;
@@ -341,8 +340,8 @@
             <td>
                 <div class="fristDiv2">
                     {{-- shop logo --}}
-                    <div class="fristsq"
-                        style="background-image: url('{{ public_path('storage/' . $shipment->account->logo) }}');background-size:cover !important;">
+                    <div class="fristsq">
+                        <img src="{{ public_path('storage/' . $shipment->account->logo) }}" width="98%"  height="80px" alt="logo">
                     </div>
                     <div class="ozDiv">
                         @if (!$product_properties->isEmpty())
