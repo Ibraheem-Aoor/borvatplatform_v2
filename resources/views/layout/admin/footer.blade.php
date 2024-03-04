@@ -10,7 +10,7 @@
 <script src="{{ asset('assets/lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
 <script src="{{ asset('assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
-<script src="{{ asset('assets/js/custom/master.js') }}"></script>
+<script src="{{ asset('assets/js/custom/master.js') }}?v=0.01"></script>
 <!-- Template Javascript -->
 <script src="{{ asset('assets/js/main.js?v=0.01') }}"></script>
 

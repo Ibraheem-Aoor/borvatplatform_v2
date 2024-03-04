@@ -1,15 +1,15 @@
   {{-- Start product edit  Modal --}}
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="product-update-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"></h5>
-                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <form action="{{ route('product.edit') }}" id="edit-product-form">
+              <form action="{{ route('product.edit') }}" class="custom-form" method="POST" id="edit-product-form">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel"></h5>
+                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
                       <div class="avatar-picture">
                           <div class="image-input image-input-outline" id="imgUserProfile">
                               <div class="image-input-wrapper"
@@ -75,28 +75,14 @@
                               <input type="number" name="height" class="form-control" placeholder="cm">
                           </div>
                       </div>
-                      {{-- product properites --}}
-                      <div class="row">
-                          <div class="col-sm-8">
-                              <div class="form-group">
-                                  <label for="name">Property</label>
-                                  <input type="text" name="properties[]" id="#properties" class="form-control">
-                              </div>
-                              <div class="col-sm-2">
-                                  <button type="button" class="remove_feature btn-sm mt-3 btn-primary"
-                                      onclick="addNewFeature($(this));"><i class="fa fa-plus"></i></button>
-                              </div>
-                          </div>
-                      </div>
-                      
-                  </form>
 
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary"
-                      onclick="event.preventDefault();$('#edit-product-form').submit();">Save changes</button>
-              </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+              </form>
+
           </div>
       </div>
   </div>

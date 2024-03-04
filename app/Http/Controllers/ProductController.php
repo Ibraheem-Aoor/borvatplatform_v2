@@ -53,30 +53,13 @@ class ProductController extends Controller
                 'content' => $request->content,
             ]);
             $image = $request->file('product_image');
-            $response_data = [
-                'status' => true,
-                'number_of_pieces' => $product->number_of_pieces,
-                'purchase_place' => $product->purchase_place,
-                'purchase_price' => $product->purchase_price,
-                'weight' => $product->weight,
-                'width' => $product->width,
-                'length' => $product->length,
-                'height' => $product->height,
-                'note' => $product->note,
-                'content' => $product->content,
-                'image_id' => $product->id,
-            ];
             if ($image) {
                 $image_name = Storage::disk('public')->put('products/' . $product->id . '/', $image);
                 Storage::disk('public')->delete('products/' . $product->id . '/' . $product->image);
                 $product->image = basename($image_name);
                 $product->save();
-                $response_data = array_merge($response_data, ['image_stored' => true, 'image_path' => Storage::url('products/' . $product->id . '/' . $product->image)]);
-                return response()->json($response_data, 200);
-            } else {
-                $response_data = array_merge($response_data, ['is_updated' => true]);
-                return response()->json($response_data, 200);
             }
+            return response()->json(generateResponse(status: true, modal_to_hide: '#product-update-modal', table_reload: true), 200);
         } catch (Throwable $ex) {
             dd($ex);
             return response()->json(['status' => true, 'image_stored' => true], 200);
@@ -102,7 +85,7 @@ class ProductController extends Controller
                     'is_active' => isset($active_properities[$key]),
                 ]);
             }
-            $response = generateResponse(status:true , modal_to_hide:'#product-properities-modal' , table_reload:true);
+            $response = generateResponse(status: true, modal_to_hide: '#product-properities-modal', table_reload: true);
         } catch (Throwable $e) {
             dd($e);
             $response = generateResponse(false);

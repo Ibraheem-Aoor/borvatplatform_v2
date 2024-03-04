@@ -82,7 +82,7 @@ if (!function_exists('generateResponse')) {
         $is_deleted = false,
         $message = null
     ) {
-        $response_message = !is_null($message) ? ($message) : ($status ? __('response_messages.succcess') : __('response_messages.error'));
+        $response_message = !is_null($message) ? ($message) : ($status ? __('response_messages.update_success') : __('response_messages.error'));
         return [
             'status' => $status,
             'message' => $response_message,

@@ -62,10 +62,29 @@ $(document).ready(function () {
                     toastr.error(response.message);
                 }
                 if (response.reset_form) {
-                    $('button[type="reset"]').click();
+                    $(this).trigger('reset');
                 }
+                var table = $('#myTable').DataTable();
+
+                // Store current page and selected rows before reloading
+                var currentPage = table.page();
+                var selectedRows = table.rows({ selected: true }).data().toArray();
+
                 if (response.table_reload) {
-                    $('#myTable').DataTable().ajax.reload();
+                    table.ajax.reload(function () {
+                        // Restore previous page and reselect records
+                        table.page(currentPage).draw(false);
+
+                        selectedRows.forEach(function (row) {
+                            var index = table.rows().eq(0).filter(function (rowIdx) {
+                                return table.cell(rowIdx, 0).data() === row[0];
+                            });
+
+                            if (index.length > 0) {
+                                table.row(index).select();
+                            }
+                        });
+                    });
                 }
                 if (response.modal_to_hide) {
                     $(response.modal_to_hide).modal('hide');

@@ -19,7 +19,7 @@ class ProductPropertyRequest extends BaseUserRequest
             'properties' => ['required', 'array'],
             'properties.*' => ['required'],
             'active_properities' => ['required', 'array'],
-            'active_properities.*' => ['required', Rule::in(['on', 'off'])],
+            'active_properities.*' => ['nullable', Rule::in(['on', 'off'])],
         ];
     }
 }

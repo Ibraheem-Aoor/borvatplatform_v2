@@ -189,19 +189,20 @@
             }
         });
 
-        $('#exampleModal').on('shown.bs.modal', function(e) {
+        $('#product-update-modal').on('shown.bs.modal', function(e) {
+            $('#edit-product-form')[0].reset();
             var button = e.relatedTarget;
             var title = button.getAttribute('data-title');
             var id = button.getAttribute('data-id');
-            var weight = $('#p-weight-' + id).html();
-            var width = $('#p-width-' + id).html();
-            var height = $('#p-height-' + id).html();
-            var length = $('#p-length-' + id).html();
-            var number_of_pieces = $('#p-no-of-pieces-' + id).html();
-            var purchase_place = $('#p-place-' + id).html();
-            var purchase_price = $('#p-price-' + id).html();
-            var note = $('#p-note-' + id).text();
-            var content = $('#p-content-' + id).text();
+            var weight = button.getAttribute('data-weight');
+            var width = button.getAttribute('data-width');
+            var height = button.getAttribute('data-height');
+            var length = button.getAttribute('data-length');
+            var number_of_pieces = button.getAttribute('data-number_of_pieces');
+            var purchase_place =  button.getAttribute('data-purchase_place');
+            var purchase_price = button.getAttribute('data-purchase_price');
+            var note = button.getAttribute('data-note');
+            var content = button.getAttribute('data-content');
             $('input[name="product_id"]').val(id);
             $(this).find('h5').html(title);
             if (button.getAttribute('data-image') != null) {
@@ -218,57 +219,10 @@
             $('input[name="number_of_pieces"]').val(number_of_pieces);
             $('input[name="purchase_place"]').val(purchase_place);
             $('input[name="purchase_price"]').val(purchase_price);
-            $('textarea[name="note"]').val(note);
-            $('textarea[name="content"]').val(content);
-            $('#myTable').DataTable().clear().draw();
+            $('textarea[name="note"]').text(note);
+            $('textarea[name="content"]').text(content);
         });
 
-
-        // Ajax Form submittion
-        $(document).on('submit', '#edit-product-form', function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
-            $.ajax({
-                url: "{{ route('product.edit') }}",
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.status) {
-                        $('#p-place-' + response.image_id).html(response.purchase_place);
-                        $('#p-no-of-pieces-' + response.image_id).html(response.number_of_pieces);
-                        $('#p-price-' + response.image_id).html(response.purchase_price);
-                        $('#p-weight-' + response.image_id).html(response.weight);
-                        $('#p-width-' + response.image_id).html(response.width);
-                        $('#p-length-' + response.image_id).html(response.length);
-                        $('#p-height-' + response.image_id).html(response.height);
-                        $('#p-note-' + response.image_id).html(response.note);
-                        $('#p-content-' + response.image_id).html(response.content);
-                        if (response.image_stored) {
-                            toastr.success('Image Changed Successfully');
-                            $('#btn-' + response.image_id).attr('data-image', response.image_path);
-                            var image_to_update = $('#' + response.image_id);
-                            image_to_update.prop('src', response.image_path);
-                        } else {
-                            toastr.success('Poduct Updated Successfully');
-                        }
-                        $('#exampleModal').modal('hide');
-                    }
-                },
-                error: function(response) {
-                    if (response.status == 422) {
-                        $.each(response.responseJSON.errors, function(attributes, errors) {
-                            $.each(errors, function(key, message) {
-                                toastr.error(message);
-                            });
-                        });
-                    } else {
-                        toastr.error('Something Went Wrong');
-                    }
-                }
-            });
-        });
     </script>
 
     {{-- product properties --}}

@@ -43,14 +43,16 @@ class ProductTransformer extends TransformerAbstract
 
     public function getActionBtns($product)
     {
-        return '<div class="d-flex"><button id="btn-' . $product->id . '" type="button" class="btn-sm btn btn-success"
-        data-id="' . $product->id . '" data-title="' . $product->title . '"
+        return '<div class="d-flex"><button id="btn-' . $product->id . '" type="button" class="btn-sm btn btn-success" 
+        data-id="' . $product->id . '" data-title="' . $product->title . '" data-number_of_pieces="' . $product->number_of_pieces . '"  data-purchase_place="' . $product->purchase_place . '" data-purchase_price="' . $product->purchase_price . '"
+        data-weight="' . ((double) ($product->weight * 1000)) . '" data-width="' . $product->width . '" data-height="' . $product->height . '" data-length="' . $product->length . '"
+         data-note="' . $product->note . '"  data-content="' . $product->content . '"
         ' . $this->getDataImageAttr($product) .
-            'data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+            'data-bs-toggle="modal" data-bs-target="#product-update-modal"><i
             class="fa fa-edit"></i></button> &nbsp;
          <button  type="button" class="btn-sm btn btn-success"
         data-product_id="' . $product->id . '" data-title="' . $product->title . '"
-        data-bs-toggle="modal" data-bs-target="#product-properities-modal" data-title="'.$product->title.'"  data-props='.(json_encode($product->properties)).' data-action="' . route('product.update_properities'  ,$product->id) . '" data-method="POST"><i
+        data-bs-toggle="modal" data-bs-target="#product-properities-modal" data-title="' . $product->title . '"  data-props=' . (json_encode($product->properties)) . ' data-action="' . route('product.update_properities', $product->id) . '" data-method="POST"><i
             class="fa fa-cogs"></i></button></div>';
     }
 }
