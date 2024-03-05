@@ -78,7 +78,7 @@
             height: 85px !important;
             width: 85px !important;
             border-radius: 50%;
-            border: 2px solid black;
+            border: 2px solid gray;
             box-shadow: 3px 10px 15px black;
             position: relative;
             margin: auto !important;
