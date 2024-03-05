@@ -77,7 +77,6 @@
         .smallDivINSecond {
             height: 85px !important;
             width: 85px !important;
-            background-color: rgb(111, 111, 111);
             border-radius: 50%;
             border: 2px solid black;
             box-shadow: 3px 10px 15px black;
@@ -88,8 +87,8 @@
         }
 
         .smallDivINSecond h2 {
-            color: white;
-            font-size: 12px;
+            color: black !important;
+            font-size: 25px;
             text-align: center !important;
             font-weight: bold;
             text-shadow: 3px 3px 3px black;
@@ -98,6 +97,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            padding: 2px !important;
             word-wrap: break-word !important; /* Allow the text to break and wrap */
 
         }
@@ -107,7 +107,7 @@
             height: 64px;
             background-color: white;
             border-radius: 10px;
-            border: 2px solid black;
+            border: 2px solid gray;
             padding: 3px 7px;
         }
 
@@ -118,7 +118,7 @@
 
         .secondDiv2 {
             height: 400px;
-            background-image: url("{{ public_path('assets/img/bg_3.png') }}");
+            /* background-image: url("{{ public_path('assets/img/bg_3.png') }}"); */
             background-size: cover !important;
             width: 280px;
             margin-top: 75px;
@@ -376,7 +376,17 @@
                         @if (!$product_properties->isEmpty())
                             @foreach ($product_properties as $prop)
                                 <div class="smallDivINSecond">
-                                    <h2>{{ $prop->name }}</h2>
+                                    @php
+                                        $is_small_font = false;
+                                        $words = explode(' ' , $prop->name);
+                                        foreach ($words as $word) {
+                                            if(strlen($word) > 5)
+                                            {
+                                                $is_small_font = true;
+                                            }
+                                        }
+                                    @endphp
+                                    <h2 style="font-weight: 900;" @if($is_small_font) style="font-size:15px !important;" @endif>{{ $prop->name }}</h2>
                                 </div>
                             @endforeach
                         @else
