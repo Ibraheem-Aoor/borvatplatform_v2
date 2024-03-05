@@ -45,8 +45,7 @@ $(document).ready(function () {
     $(document).on('submit', 'form.custom-form', function (e) {
 
         e.preventDefault();
-        var submitBtn = $(this).find('button[type="submit"]');
-        submitBtn.prop('disabled', true);
+        $('#spinner').addClass('show');
         var formData = new FormData(this);
         $.ajax({
             url: $(this).attr('action'),
@@ -89,7 +88,7 @@ $(document).ready(function () {
                 if (response.modal_to_hide) {
                     $(response.modal_to_hide).modal('hide');
                 }
-                submitBtn.prop('disabled', false);
+                $('#spinner').removeClass('show');
             }, error: function (response) {
                 if (response.status == 422) {
                     $.each(response.responseJSON.errors, function (key, errorsArray) {
@@ -102,7 +101,7 @@ $(document).ready(function () {
                 } else {
                     toastr.error(response.message);
                 }
-                submitBtn.prop('disabled', false);
+                $('#spinner').removeClass('show');
             }
         });
     });
