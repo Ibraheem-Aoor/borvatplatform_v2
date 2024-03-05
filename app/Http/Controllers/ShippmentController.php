@@ -176,7 +176,6 @@ class ShippmentController extends Controller
                 $this->proccessShipmentLabel($data);
                 $shipment->is_printed = true;
                 $shipment->save();
-                $data['page_count'] += 1;
             } //end foreach
             $merger->addIterator($data['iterator']);
             $createdPdf = $merger->merge();
@@ -201,6 +200,7 @@ class ShippmentController extends Controller
             $temp_pdf = public_path('storage/temp_pdf/' . time() . '-' . mt_rand(100000000000000, 200000000000000000) . '.pdf');
             file_put_contents($temp_pdf, $pdf->output());
             array_push($data['iterator'], $temp_pdf);
+            $data['page_count'] += 1;
         }
     }
 

@@ -30,8 +30,8 @@
 
         .textdiv h1 {
             text-align: center !important;
-            font-size: 25px;
-            letter-spacing: 20px;
+            font-size: 35px;
+            letter-spacing: 12px;
             margin: 0;
         }
 
@@ -41,22 +41,22 @@
 
         .secondDiv {
             margin-left: 10px;
-            margin-top: 10px;
+            margin-top: 50px;
         }
 
         .fristDiv2 {
             width: 29%;
-            margin-top: -403px;
+            margin-top: -440px;
         }
 
         .fristsq {
-            width: 115%;
+            width: 125%;
             height: 80px;
             background-size: cover;
             margin-bottom: 10px;
             border-radius: 20px;
         }
-        
+
 
         .fristsq h1 {
             text-align: center !important;
@@ -67,7 +67,7 @@
         }
 
         .ozDiv {
-            width: 88%;
+            width: 110%;
             border: 2px solid black;
             border-radius: 20px;
             padding: 10px;
@@ -75,24 +75,35 @@
         }
 
         .smallDivINSecond {
-            height: 45px;
+            height: 85px !important;
+            width: 85px !important;
             background-color: rgb(111, 111, 111);
-            margin-bottom: 15px;
-            border-radius: 65px;
+            border-radius: 50%;
             border: 2px solid black;
             box-shadow: 3px 10px 15px black;
+            position: relative;
+            margin: auto !important;
+            margin-bottom: 15px !important;
+            word-wrap: break-word !important; /* Allow the text to break and wrap */
         }
 
         .smallDivINSecond h2 {
             color: white;
-            font-size: 16px;
+            font-size: 12px;
             text-align: center !important;
             font-weight: bold;
             text-shadow: 3px 3px 3px black;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            word-wrap: break-word !important; /* Allow the text to break and wrap */
+
         }
 
         .cePhoto {
-            width: 95%;
+            width: 110%;
             height: 64px;
             background-color: white;
             border-radius: 10px;
@@ -109,9 +120,9 @@
             height: 400px;
             background-image: url("{{ public_path('assets/img/bg_3.png') }}");
             background-size: cover !important;
-            width: 310px;
-            margin-top: 70px;
-            margin-left: -170px;
+            width: 280px;
+            margin-top: 75px;
+            margin-left: -150px;
             border-radius: 30px;
             border: 1px solid black;
             position: relative;
@@ -142,12 +153,12 @@
         }
 
         .thierdDiv {
-            height: 55px;
+            height: 80px;
             background-image: url("{{ public_path('assets/img/bg_4.png') }}");
             background-size: cover !important;
             width: 100%;
             position: absolute !important;
-            bottom: 0 !important;
+            bottom: -20 !important;
             border: 1px solid black;
             border-radius: 10px;
         }
@@ -156,9 +167,14 @@
             text-align: center !important;
             line-height: 0px;
             letter-spacing: 2px;
-            font-size: x-large !important;
+            font-size: large !important;
             text-align: center !important;
             padding-top: 10px !important;
+        }
+
+        .thierdDiv p b {
+            font-size: x-large !important;
+
         }
 
 
@@ -210,7 +226,7 @@
             border: 1px solid black;
             border-radius: 20px;
             width: 95%;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
         }
 
         .oneDiv2 p {
@@ -238,7 +254,7 @@
             border: 1px solid black;
             border-radius: 20px;
             width: 95%;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
             background-color: white;
         }
 
@@ -265,6 +281,17 @@
             margin-left: -10px;
         }
 
+        .footer {
+            width: 100% !important;
+            font-size: 20px !important;
+            text-align: center !important;
+            margin-top: -20px !important;
+        }
+
+        table{
+            margin-top: -50px !important;
+        }
+
         /* .arrow-right {
       width: 0;
       height: 0;
@@ -278,7 +305,7 @@
         <tr>
             <td style="padding: 10px;">
                 <div class="textdiv oneDivTD">
-                    <h1>BORVAT</h1>
+                    <h1>Bol.com</h1>
                 </div>
 
             </td>
@@ -290,7 +317,8 @@
                         <p><b>{{ $product->title }}</b></p>
                     </div>
                     <div class="thierdDiv">
-                        <p><b>{{ $product->ean }}</b></p>
+                        <p><b>EAN:</b>{{ $product->ean }}</p>
+                        <p><b>Order:</b>{{ $shipment->order?->api_id }}</p>
                     </div>
                 </div>
             </td>
@@ -341,7 +369,8 @@
                 <div class="fristDiv2">
                     {{-- shop logo --}}
                     <div class="fristsq">
-                        <img src="{{ public_path('storage/' . $shipment->account->logo) }}" width="98%"  height="80px" alt="logo">
+                        <img src="{{ public_path('storage/' . $shipment->account->logo) }}" width="110%"
+                            height="80px" alt="logo">
                     </div>
                     <div class="ozDiv">
                         @if (!$product_properties->isEmpty())
@@ -351,15 +380,15 @@
                                 </div>
                             @endforeach
                         @else
-                        <div class="smallDivINSecond">
-                            <h2>&nbsp;</h2>
-                        </div>
-                        <div class="smallDivINSecond">
-                            <h2>&nbsp;</h2>
-                        </div>
-                        <div class="smallDivINSecond">
-                            <h2>&nbsp;</h2>
-                        </div>
+                            <div class="smallDivINSecond">
+                                <h2>&nbsp;</h2>
+                            </div>
+                            <div class="smallDivINSecond">
+                                <h2>&nbsp;</h2>
+                            </div>
+                            <div class="smallDivINSecond">
+                                <h2>&nbsp;</h2>
+                            </div>
                         @endif
                     </div>
                     <div class="cePhoto">
@@ -369,6 +398,9 @@
             </td>
         </tr>
     </table>
+    <div class="footer">
+        <h3>{{ $page_count }}</h3>
+    </div>
 </body>
 
 </html>
