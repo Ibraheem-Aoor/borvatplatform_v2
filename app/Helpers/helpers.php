@@ -303,3 +303,7 @@ if (!function_exists('getCurrentLocale')) {
 }
 
 
+function containsNumbers($str) {
+    return preg_match('/\d/', $str) > 0;
+}
+

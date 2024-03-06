@@ -20,20 +20,23 @@
         }
 
 
-        .textdiv {
+        .textdiv h2 {
             border: 1px solid black;
-            width: 150%;
+            width: 180%;
             background-color: rgb(248, 248, 248);
             border-radius: 11px;
-            padding: 7px 17px;
+            font-weight: bolder !important;
+            text-align: center !important;
+            color: blue !important;
+            font-size: 25px !important;
+            margin:0px !important;
+            margin-bottom:2px !important;
         }
 
-        .textdiv h1 {
-            text-align: center !important;
-            font-size: 35px;
-            letter-spacing: 12px;
-            margin: 0;
+        .textdiv h2:first-of-type span {
+            color: red;
         }
+
 
         .fristDiv {
             width: 60%;
@@ -70,36 +73,22 @@
             width: 110%;
             border: 2px solid black;
             border-radius: 20px;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 5px;
+            margin-bottom: 5px;
         }
 
         .smallDivINSecond {
-            height: 85px !important;
-            width: 85px !important;
-            border-radius: 50%;
-            border: 2px solid gray;
-            box-shadow: 3px 10px 15px black;
+            width: 100% !important;
             position: relative;
-            margin: auto !important;
-            margin-bottom: 15px !important;
-            word-wrap: break-word !important; /* Allow the text to break and wrap */
+            text-align: center !important;
         }
 
         .smallDivINSecond h2 {
             color: black !important;
             font-size: 25px;
             text-align: center !important;
-            font-weight: bold;
-            text-shadow: 3px 3px 3px black;
-            margin: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 2px !important;
-            word-wrap: break-word !important; /* Allow the text to break and wrap */
-
+            font-weight: 900;
+            word-wrap: break-word;
         }
 
         .cePhoto {
@@ -121,8 +110,8 @@
             /* background-image: url("{{ public_path('assets/img/bg_3.png') }}"); */
             background-size: cover !important;
             width: 280px;
-            margin-top: 75px;
-            margin-left: -150px;
+            margin-top: 100px !important;
+            margin-left: -130px;
             border-radius: 30px;
             border: 1px solid black;
             position: relative;
@@ -153,14 +142,15 @@
         }
 
         .thierdDiv {
-            height: 80px;
             background-image: url("{{ public_path('assets/img/bg_4.png') }}");
             background-size: cover !important;
             width: 100%;
             position: absolute !important;
-            bottom: -20 !important;
+            bottom: -12 !important;
             border: 1px solid black;
             border-radius: 10px;
+            padding: 5px;
+            padding-top: 10px;
         }
 
         .thierdDiv p {
@@ -169,7 +159,6 @@
             letter-spacing: 2px;
             font-size: large !important;
             text-align: center !important;
-            padding-top: 10px !important;
         }
 
         .thierdDiv p b {
@@ -285,10 +274,10 @@
             width: 100% !important;
             font-size: 20px !important;
             text-align: center !important;
-            margin-top: -20px !important;
+            margin-top: -40px !important;
         }
 
-        table{
+        table {
             margin-top: -50px !important;
         }
 
@@ -304,8 +293,13 @@
     <table>
         <tr>
             <td style="padding: 10px;">
-                <div class="textdiv oneDivTD">
-                    <h1>Bol.com</h1>
+                <div class="oneDivTD">
+                    <div class="textdiv">
+                        <h2>Order# <span>{{ $shipment->order?->api_id }}</span></h2>
+                    </div>
+                    <div class="textdiv">
+                        <h2>bol.com</h2>
+                    </div>
                 </div>
 
             </td>
@@ -318,7 +312,6 @@
                     </div>
                     <div class="thierdDiv">
                         <p><b>EAN:</b>{{ $product->ean }}</p>
-                        <p><b>Order:</b>{{ $shipment->order?->api_id }}</p>
                     </div>
                 </div>
             </td>
@@ -376,18 +369,9 @@
                         @if (!$product_properties->isEmpty())
                             @foreach ($product_properties as $prop)
                                 <div class="smallDivINSecond">
-                                    @php
-                                        $is_small_font = false;
-                                        $words = explode(' ' , $prop->name);
-                                        foreach ($words as $word) {
-                                            if(strlen($word) > 5)
-                                            {
-                                                $is_small_font = true;
-                                            }
-                                        }
-                                    @endphp
-                                    <h2 style="font-weight: 900;" @if($is_small_font) style="font-size:15px !important;" @endif>{{ $prop->name }}</h2>
+                                    <h2 @if(containsNumbers($prop->name))  style="color: red !important;" @endif>{{ $prop->name }}</h2>
                                 </div>
+                                <hr style="color: black !important;">
                             @endforeach
                         @else
                             <div class="smallDivINSecond">
