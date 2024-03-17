@@ -100,10 +100,10 @@
 
 <body>
 
-    <h3 class="text-center">{{ $shipment->order?->api_id }}</h3>
+    <h3 class="text-right">{{ $shipment->order?->api_id }}</h3>
     {{-- Shipment --}}
-
-    <h5>Verzenddatum:</h3>
+    <img src="{{ public_path('storage/' . $shipment->account->logo) }}" width="80px" height="80px" alt="logo" style="margin-top: -50px;">
+    <h5 style="margin-top:5% !important;">Verzenddatum:</h3>
         <div>
             <div class="child">
                 <ul>
@@ -127,9 +127,9 @@
 
             </div>
 
-            <div style="display: inline-block;" style="padding-left:10% !important;">
+            <div style="display: inline-block;" style="padding-left:20% !important;">
                 @if (@$shipment->country_code != 'NL')
-                    <img src="{{ $outside_netherlands_logo }}" alt="" width="50%">
+                <img src="{{ $outside_netherlands_logo }}" alt="" width="50%">
                 @else
                     <img src="{{ $inside_netherlands_logo }}" alt="" width="70%">
                 @endif
@@ -138,7 +138,7 @@
 
 
 
-        <div class="parent">
+        <div class="parent" style="margin-top: -50px;">
             <div class="child no-border">
                 <img src="" alt="" width="40%">
                 <br>
