@@ -145,7 +145,7 @@
                 <p class="red">{{ 'BS' . $shipment->api_id }}</p>
             </div>
 
-            <br>
+            <br><br>
             <div class="child" style="padding:15px !important;"
                 style="border:1px solid #000;margin-bottom:15% !important;margin-left:5% !important;">
                 <ul>
