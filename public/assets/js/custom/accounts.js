@@ -43,6 +43,10 @@ $('#account-create-update-modal').on('shown.bs.modal', function (e) {
         $('#name').val(name);
         $('#client_id').val(btn.getAttribute('data-client-id'));
         $('#client_key').val(btn.getAttribute('data-client-key'));
+        $('#address_street').val(btn.getAttribute('data-address_street'));
+        $('#address_city').val(btn.getAttribute('data-address_city'));
+        $('#address_country').val(btn.getAttribute('data-address_country'));
+        $('#address_zipcode').val(btn.getAttribute('data-address_zipcode'));
     }
 });
 

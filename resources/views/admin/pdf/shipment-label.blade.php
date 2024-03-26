@@ -102,7 +102,8 @@
 
     <h3 class="text-right">{{ $shipment->order?->api_id }}</h3>
     {{-- Shipment --}}
-    <img src="{{ public_path('storage/' . $shipment->account->logo) }}" width="80px" height="80px" alt="logo" style="margin-top: -50px;">
+    <img src="{{ public_path('storage/' . $shipment->account->logo) }}" width="80px" height="80px" alt="logo"
+        style="margin-top: -50px;">
     <h5 style="margin-top:5% !important;">Verzenddatum:</h3>
         <div>
             <div class="child">
@@ -115,13 +116,15 @@
                         Afzender:
                     </li>
                     <li>
-                        Borvat.com
+                        {{ $shipment->account->name }}
                     </li>
                     <li>
-                        Overwelving 2
+                        {{ $shipment->account->address['street'] }}
                     </li>
                     <li>
-                        7201LT Zutphen
+                        {{ $shipment->account->address['zipcode'] }} &nbsp;
+                        {{ $shipment->account->address['city'] }} &nbsp;
+                        {{ $shipment->account->address['country'] }}
                     </li>
                 </ul>
 
@@ -129,7 +132,7 @@
 
             <div style="display: inline-block;" style="padding-left:20% !important;">
                 @if (@$shipment->country_code != 'NL')
-                <img src="{{ $outside_netherlands_logo }}" alt="" width="50%">
+                    <img src="{{ $outside_netherlands_logo }}" alt="" width="50%">
                 @else
                     <img src="{{ $inside_netherlands_logo }}" alt="" width="70%">
                 @endif

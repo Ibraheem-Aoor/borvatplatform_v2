@@ -15,6 +15,11 @@ class BolAccount extends Model
     protected $fillable = [
         'name',
         'logo',
+        'address',
+    ];
+
+    protected $casts = [
+        'address' => 'array',
     ];
 
 

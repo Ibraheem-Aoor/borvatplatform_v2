@@ -10,6 +10,7 @@ use App\Jobs\FetchBolShipmentsJob;
 use App\Models\BolAccount;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Shipment;
 use App\Services\BOL\BolShipmentService;
 use App\Traits\BoolApiTrait;
 use App\Traits\OrderTrait;
@@ -26,6 +27,10 @@ class AccountController extends Controller
 {
     public function index()
     {
+        $s = BolAccount::query()->latest()->first();
+        Shipment::query()->update([
+            'bol_account_id'    =>  $s->id,
+        ]);
         $data['ajax_route'] = route('bol_accounts.table_data');
         return view('admin.accounts.index', $data);
     }

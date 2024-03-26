@@ -41,6 +41,24 @@
                             <label for="">Client Key:</label>
                             <input type="text" name="client_key" id="client_key" class="form-control">
                         </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-6">
+                                <label for="">Address Street:</label>
+                                <input type="text" name="address[street]" id="address_street" class="form-control">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="">Address City:</label>
+                                <input type="text" name="address[city]" id="address_city" class="form-control">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="">Address Country:</label>
+                                <input type="text" name="address[country]" id="address_country" class="form-control">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="">Address Zipcode:</label>
+                                <input type="text" name="address[zipcode]" id="address_zipcode" class="form-control">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -50,6 +68,7 @@
                         <button type="reset" hidden class="btn btn-primary" id="save-btn">Save
                             changes</button>
                     </div>
+
                 </form>
             </div>
 
