@@ -27,10 +27,6 @@ class AccountController extends Controller
 {
     public function index()
     {
-        $s = BolAccount::query()->latest()->first();
-        Shipment::query()->update([
-            'bol_account_id'    =>  $s->id,
-        ]);
         $data['ajax_route'] = route('bol_accounts.table_data');
         return view('admin.accounts.index', $data);
     }

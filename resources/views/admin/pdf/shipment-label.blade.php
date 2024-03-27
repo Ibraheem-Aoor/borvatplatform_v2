@@ -150,7 +150,7 @@
 
             <br><br>
             <div class="child" style="padding:15px !important;"
-                style="border:1px solid #000;margin-bottom:15% !important;margin-left:5% !important;">
+                style="border:1px solid #000;margin-bottom:15% !important;margin-left:3% !important;">
                 <ul>
                     <li>
                         {{ @$shipment->first_name . ' ' . @$shipment->surname }}
@@ -168,7 +168,6 @@
                 </ul>
             </div>
 
-        </div>
         </div>
 
 
