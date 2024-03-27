@@ -104,7 +104,7 @@
     {{-- Shipment --}}
     <img src="{{ public_path('storage/' . $shipment->account->logo) }}" width="80px" height="80px" alt="logo"
         style="margin-top: -50px;">
-    <h5 style="margin-top:5% !important;">Verzenddatum:</h3>
+    <h5 style="margin-top:2% !important;">Verzenddatum:</h3>
         <div>
             <div class="child">
                 <ul>
