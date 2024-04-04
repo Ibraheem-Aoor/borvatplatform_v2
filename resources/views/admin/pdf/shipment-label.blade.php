@@ -132,7 +132,7 @@
 
             <div style="display: inline-block;" style="padding-left:20% !important;">
                 @if (@$shipment->country_code != 'NL')
-                    <img src="{{ $outside_netherlands_logo }}" alt="" width="50%">
+                    <img src="{{ $outside_netherlands_logo }}" alt="" width="50%" height="100px">
                 @else
                     <img src="{{ $inside_netherlands_logo }}" alt="" width="70%">
                 @endif
