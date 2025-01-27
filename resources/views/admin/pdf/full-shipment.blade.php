@@ -349,10 +349,10 @@
                             TheNetherlands
                         </p>
                     </div>
-                    {{-- <div class="oneDiv3" style="height: 55px;">
-                        quanttiy
-                        <h1>{{ $product->pivot->quantity }}</h1>
-                    </div> --}}
+                    <div class="oneDiv3" style="height: 55px;">
+                        {{-- quanttiy --}}
+                        {{-- <h1>{{ $product->pivot->quantity }}</h1> --}}
+                    </div>
                     <div></div>
                 </div>
             </td>
@@ -369,22 +369,16 @@
                         @if (!$product_properties->isEmpty())
                             @foreach ($product_properties as $prop)
                                 <div class="smallDivINSecond">
-                                    @if (is_numeric($prop->name))
-                                        <h2 style="color: red !important;">
-                                            {{ $prop->name * $product?->pivot?->quantity }}
-                                        </h2>
-                                    @elseif(containsNumbers($prop->name))
-                                        <h2 style="color: red !important;">
-                                            {{ extractFirstNumber($prop->name) * $product?->pivot?->quantity }}
-                                        </h2>
-                                    @else
-                                        <h2>
-                                            {{ $product?->pivot?->quantity }}
-                                        </h2>
-                                    @endif
+                                    <h2 @if (containsNumbers($prop->name)) style="color: red !important;" @endif>
+                                        {{ $prop->name }}</h2>
                                 </div>
                                 <hr style="color: black !important;">
                             @endforeach
+                            <div class="smallDivINSecond">
+                                <h2 style="color: red !important;">
+                                    {{ ($product->number_of_pieces ?? 1) * $product->pivot->quantity }}</h2>
+                            </div>
+                            <hr style="color: black !important;">
                         @else
                             <div class="smallDivINSecond">
                                 <h2>&nbsp;</h2>
