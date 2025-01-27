@@ -351,7 +351,7 @@
                     </div>
                     <div class="oneDiv3" style="height: 55px;">
                         {{-- quanttiy --}}
-                        {{-- <h1>{{ $product->pivot->quantity }}</h1> --}}
+                        <h1>{{ ($product->number_of_pieces ?? 1) * $product->pivot->quantity }}</h1>
                     </div>
                     <div></div>
                 </div>
@@ -374,11 +374,6 @@
                                 </div>
                                 <hr style="color: black !important;">
                             @endforeach
-                            <div class="smallDivINSecond">
-                                <h2 style="color: red !important;">
-                                    {{ ($product->number_of_pieces ?? 1) * $product->pivot->quantity }}</h2>
-                            </div>
-                            <hr style="color: black !important;">
                         @else
                             <div class="smallDivINSecond">
                                 <h2>&nbsp;</h2>
