@@ -351,7 +351,12 @@
                     </div>
                     <div class="oneDiv3" style="height: 55px;">
                         {{-- quanttiy --}}
-                        <h1>{{ ($product->number_of_pieces ?? 1) * $product->pivot->quantity }}</h1>
+                        <h1 style="font-size:200% !important;">
+                            {{ ($product->number_of_pieces ?? 1) * $product->pivot->quantity }}</h1>
+                    </div>
+                    <div class="oneDiv3" style="height: 55px;">
+                        {{-- note --}}
+                        <h3>{{ $product->note }}</h4>
                     </div>
                     <div></div>
                 </div>
@@ -369,7 +374,7 @@
                         @if (!$product_properties->isEmpty())
                             @foreach ($product_properties as $prop)
                                 <div class="smallDivINSecond">
-                                    <h2 @if (containsNumbers($prop->name)) style="color: red !important;" @endif>
+                                    <h2>
                                         {{ $prop->name }}</h2>
                                 </div>
                                 <hr style="color: black !important;">
