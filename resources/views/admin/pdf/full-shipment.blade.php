@@ -375,7 +375,7 @@
                                         </h2>
                                     @else
                                         <h2>
-                                            {{ $prop->name }}
+                                           {{ ($product?->pivot?->quantity)}}
                                         </h2>
                                     @endif
                                 </div>
