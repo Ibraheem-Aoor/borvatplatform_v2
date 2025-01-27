@@ -369,13 +369,17 @@
                         @if (!$product_properties->isEmpty())
                             @foreach ($product_properties as $prop)
                                 <div class="smallDivINSecond">
-                                    @if (containsNumbers($prop->name))
+                                    @if (is_numeric($prop->name))
                                         <h2 style="color: red !important;">
-                                            {{ extractFirstNumber($prop->name) * $product?->pivot?->quantity   }}
+                                            {{ $prop->name * $product?->pivot?->quantity }}
+                                        </h2>
+                                    @elseif(containsNumbers($prop->name))
+                                        <h2 style="color: red !important;">
+                                            {{ extractFirstNumber($prop->name) * $product?->pivot?->quantity }}
                                         </h2>
                                     @else
                                         <h2>
-                                           {{ ($product?->pivot?->quantity)}}
+                                            {{ $product?->pivot?->quantity }}
                                         </h2>
                                     @endif
                                 </div>
