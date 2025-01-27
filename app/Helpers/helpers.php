@@ -303,7 +303,20 @@ if (!function_exists('getCurrentLocale')) {
 }
 
 
-function containsNumbers($str) {
+function containsNumbers($str)
+{
     return preg_match('/\d/', $str) > 0;
+}
+
+if (!function_exists('extractFirstNumber')) {
+    function extractFirstNumber($string)
+    {
+        if (preg_match('/^\d+/', $string, $matches)) {
+            return intval($matches[0]);
+        }
+        return 1;
+    }
+
+
 }
 

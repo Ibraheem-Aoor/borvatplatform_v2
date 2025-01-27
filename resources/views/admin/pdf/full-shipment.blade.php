@@ -29,8 +29,8 @@
             text-align: center !important;
             color: blue !important;
             font-size: 25px !important;
-            margin:0px !important;
-            margin-bottom:2px !important;
+            margin: 0px !important;
+            margin-bottom: 2px !important;
         }
 
         .textdiv h2:first-of-type span {
@@ -349,10 +349,10 @@
                             TheNetherlands
                         </p>
                     </div>
-                    <div class="oneDiv3" style="height: 55px;">
-                        {{-- quanttiy --}}
+                    {{-- <div class="oneDiv3" style="height: 55px;">
+                        quanttiy
                         <h1>{{ $product->pivot->quantity }}</h1>
-                    </div>
+                    </div> --}}
                     <div></div>
                 </div>
             </td>
@@ -369,7 +369,15 @@
                         @if (!$product_properties->isEmpty())
                             @foreach ($product_properties as $prop)
                                 <div class="smallDivINSecond">
-                                    <h2 @if(containsNumbers($prop->name))  style="color: red !important;" @endif>{{ $prop->name }}</h2>
+                                    @if (containsNumbers($prop->name))
+                                        <h2 style="color: red !important;">
+                                            {{ extractFirstNumber($prop->name) * $product?->pivot?->quantity   }}
+                                        </h2>
+                                    @else
+                                        <h2>
+                                            {{ $prop->name }}
+                                        </h2>
+                                    @endif
                                 </div>
                                 <hr style="color: black !important;">
                             @endforeach
