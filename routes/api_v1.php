@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Product\ProductController;
+use App\Http\Controllers\API\ShippmentController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,6 @@ Route::group(['middleware' => 'guest:sanctum'] , function(){
 Route::group(['middleware' => 'auth:sanctum'] , function(){
     Route::apiResource('product' , ProductController::class)->withoutMiddleware(ThrottleRequests::class);
 });
+
+// Route
+Route::get('bol-label/{bol_order_id}', [ShippmentController::class, 'getLabelForOrder']);
