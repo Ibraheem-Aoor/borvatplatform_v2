@@ -42,7 +42,7 @@ class ShippmentController extends Controller
             return response()->json(['error' => 'Label not available'], 404);
         }
         // Convert PDF to PNG if not already done
-        if (!file_exists($pngPath)) {
+        if (!file_exists($pngPath) || filesize($pngPath) == 0) {
             $imagick = new \Imagick();
             $imagick->setResolution(150, 150);
             $imagick->readImage($labelPath . '[0]'); // [0] = first page
